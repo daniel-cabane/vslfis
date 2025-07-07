@@ -20,7 +20,7 @@
                 translatedNotifs.value.push(
                     ...added.map(n => ({
                         text: t(n.text),
-                        color: n.color
+                        color: n.type
                     }))
                 );
             }

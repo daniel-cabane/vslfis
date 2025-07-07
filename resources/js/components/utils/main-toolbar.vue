@@ -16,7 +16,7 @@
     </v-tabs>
     <v-spacer />
     <template v-slot:append>
-        <profile-menu :user="user"/>
+        <profile-menu :dbuser="user"/>
     </template>
 </v-app-bar>
 </template>
@@ -27,7 +27,6 @@
 
     let navigationTab = ref('tab-1');
     const props = defineProps({ user: Object });
-    console.log(props.user);
 
     const { name } = useDisplay();
     const isWindowXs = computed(() => name.value == 'xs');

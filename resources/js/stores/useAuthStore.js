@@ -13,19 +13,26 @@ export const useAuthStore = defineStore('auth', {
             this.user = u;
         },
         async testLogin(testUser) {
-            const res = await post('/testLogin', { user: testUser });
-            if(res.user){
-                this.user = res.user;
-                window.location.reload();
-            }
+            axios.get('/sanctum/csrf-cookie').then(async response => {
+            // Login...
+                const res = await post('/testLogin', { user: testUser });
+                if(res.user){
+                    this.user = res.user;
+                    window.location.reload();
+                }
+            });
         },
         async logout() {
-            let res = await post('/logout');
+            const res = await post('/logout');
             console.log(res);
             if(res.loggedOut){
                 this.user = null;
                 window.location.replace('/');
             }
+        },
+        async updateName(name){
+            const res = await patch('/api/user/name', { name });
+            this.user = res.user;
         }
     },
     getters: {

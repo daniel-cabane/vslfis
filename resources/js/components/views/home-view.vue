@@ -15,8 +15,8 @@
     const addOne = () => {
         const text = Math.random().toString(36).substring(2, 10);
         const colors = ['primary', 'error', 'warning', 'info']
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        notifs.value.push({text, color});
-        addNotification({text, color})
+        const type = colors[Math.floor(Math.random() * colors.length)];
+        notifs.value.push({text, type});
+        addNotification({text, type});
     }
 </script>

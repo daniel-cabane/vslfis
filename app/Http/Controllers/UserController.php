@@ -19,9 +19,12 @@ class UserController extends Controller
     
             if($user){
                 Auth::login($user);
+
+                $token = $user->createToken('api-token')->plainTextToken;
     
                 return response()->json([
                     'user' => $user,
+                    'token' => $token,
                     'message' => [
                         'text' => 'User logged in',
                         'type' => 'success'
@@ -49,5 +52,15 @@ class UserController extends Controller
                 'type' => 'info'
             ]
         ]);
+    }
+
+    public function updateName(Request $request)
+    {
+        $name = $request->validate(['name' => 'required|max:100'])['name'];
+        $user = auth()->user();
+
+        $user->update(['name' => $name]);
+
+        return response()->json(['user' => $user]);
     }
 }

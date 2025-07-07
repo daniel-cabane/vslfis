@@ -3,10 +3,10 @@ import { reactive } from "vue";
 const notifications = reactive([]);
 
 const addNotification = n => {
-    if (typeof n === "object" && n !== null && "text" in n && "color" in n) {
-        notifications.push({ text: n.text, color: n.color });
+    if (typeof n === "object" && n !== null && "text" in n && "type" in n) {
+        notifications.push({ text: n.text, type: n.type });
     } else if (typeof n === "string") {
-        notifications.push({ text: n, color: "primary" });
+        notifications.push({ text: n, type: "primary" });
     }
 }
 

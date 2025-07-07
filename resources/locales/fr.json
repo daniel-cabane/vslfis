@@ -8,5 +8,17 @@
     "Password": "Mot de passe",
     "Users": "Utilisateurs",
     "Students": "Élèves",
-    "Name or email": "Nom ou email"
+    "Name or email": "Nom ou email",
+    "Name": "Name",
+    "Email": "Email",
+    "Save": "Enregistrer",
+    "User updated": "Utilisateur mis à jour",
+    "User deleted": "Utilisateur supprimé",
+    "Delete": "Supprimer",
+    "Close": "Fermer",
+    "Confirm": "Confirmer",
+    "Are you sure you want to delete this user ?": "Êtes-vous sûr de vouloir supprimer cet Utilisateur ?",
+    "Yes I am sure": "Oui je suis sûr",
+    "Change your name": "Modifier votre nom",
+    "Cancel": "Annuler"
 }

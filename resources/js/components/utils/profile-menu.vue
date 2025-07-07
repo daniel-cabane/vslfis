@@ -5,9 +5,23 @@
                 <v-btn outline icon="mdi-account" v-bind="props"/>
             </template>
             <v-list>
-                <v-list-subheader v-if="user">
-                    {{ user.name }}
-                </v-list-subheader>
+                <v-dialog width="350" v-model="newNameDialog" v-if="user">
+                    <template v-slot:activator="{ props: activatorProps }">
+                        <v-list-item v-bind="activatorProps">
+                            <v-list-item-title class="text-title">
+                                {{ user.name }}
+                            </v-list-item-title>
+                        </v-list-item>
+                    </template>
+                    <template v-slot:default="{ isActive }">
+                        <v-card :title="$t('Change your name')">
+                            <v-card-text>
+                                <v-text-field :label="$t('Name')" variant="outlined" v-model="newName"/>
+                            </v-card-text>
+                            <dialog-footer :isLoading="isLoading" @no="cancelNewName" @yes="submitNewName"/>
+                        </v-card>
+                    </template>
+                </v-dialog>
                 <v-divider />
                 <theme-and-language-picker />
                 <v-divider />
@@ -72,11 +86,12 @@
     ]);
 
     const authStore = useAuthStore();
-    const { testLogin, defineUser, logout } = authStore;
-    const { isLoading } = storeToRefs(authStore);
-    const props = defineProps({ user: Object });
-    if(props.user){
-        defineUser(props.user);
+    const { testLogin, defineUser, logout, updateName } = authStore;
+    const { isLoading, user } = storeToRefs(authStore);
+    const props = defineProps({ dbuser: Object });
+
+    if(props.dbuser){
+        defineUser(props.dbuser);
     }
 
     const router = useRouter();
@@ -84,4 +99,15 @@
         router.push('/admin');
     }
     const localEnv = computed(() => window.Laravel.env == 'local');
+
+    const newNameDialog = ref(false);
+    const newName = ref(props.dbuser.name);
+    const cancelNewName = () => {
+        newName.value = user.name;
+        newNameDialog.value = false;
+    }
+    const submitNewName = async () => {
+        await updateName(newName.value);
+        newNameDialog.value = false;
+    }
 </script>
