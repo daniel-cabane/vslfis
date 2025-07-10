@@ -33,6 +33,7 @@ Route::group(['middleware'=>['role:admin']], function(){
 
 Route::group(['middleware'=>['role:admin|cpe']], function(){
     Route::get('/admin/users', [AdminController::class, 'indexUsers']);
+    Route::post('/admin/students', [AdminController::class, 'addStudents']);
 });
 
 

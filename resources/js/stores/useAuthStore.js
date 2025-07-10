@@ -6,7 +6,7 @@ const { get, post, patch, del, isLoading } = useAPI();
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         isReady: false,
-        user: {}
+        user: null
     }),
     actions: {
         defineUser(u) {

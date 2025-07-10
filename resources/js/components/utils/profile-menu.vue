@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-menu :close-on-content-click="false">
+        <v-menu eager :close-on-content-click="false">
             <template v-slot:activator="{ props }">
                 <v-btn outline icon="mdi-account" v-bind="props"/>
             </template>
@@ -25,7 +25,7 @@
                 <v-divider />
                 <theme-and-language-picker />
                 <v-divider />
-                <v-list-item @click="goToDashboard" v-if="user && (user.is.admin || user.is.cpe)">
+                <v-list-item @click="goToDashboard" v-if="user &&(user.is.admin || user.is.cpe)">
                     <template v-slot:prepend>
                         <v-icon icon="mdi-security"></v-icon>
                     </template>
@@ -37,7 +37,7 @@
                     </template>
                     <v-list-item-title>{{ $t("Sign out") }}</v-list-item-title>
                 </v-list-item>
-                <v-dialog v-model="loginDialog" width="380" v-else>
+                <v-dialog v-model="loginDialog" persistent width="380" v-else>
                     <template v-slot:activator="{ props }">
                         <v-list-item v-bind="props">
                             <template v-slot:prepend>
@@ -79,7 +79,6 @@
     import { storeToRefs } from 'pinia';
     import { useRouter } from 'vue-router';
     
-    const loginDialog = ref(false);
     const testUser = ref('');
     const testUserOptions = ref([
         'Daniel CABANE', 'CPE', 'VS1', 'VS2', 'VS3', 'VS4'
@@ -90,6 +89,7 @@
     const { isLoading, user } = storeToRefs(authStore);
     const props = defineProps({ dbuser: Object });
 
+    const loginDialog = ref(!props.dbuser);
     if(props.dbuser){
         defineUser(props.dbuser);
     }
@@ -101,7 +101,7 @@
     const localEnv = computed(() => window.Laravel.env == 'local');
 
     const newNameDialog = ref(false);
-    const newName = ref(props.dbuser.name);
+    const newName = ref(props.dbuser ?  props.dbuser.name : '');
     const cancelNewName = () => {
         newName.value = user.name;
         newNameDialog.value = false;

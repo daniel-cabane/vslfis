@@ -13,7 +13,7 @@
                 <admin-users-management/>
             </v-tabs-window-item>
             <v-tabs-window-item value="students">
-            Two
+                <admin-student-management/>
             </v-tabs-window-item>
         </v-tabs-window>
     </v-container>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Student;
 
 class AdminController extends Controller
 {
@@ -73,6 +74,43 @@ class AdminController extends Controller
             'message' => [
                         'text' => 'User deleted',
                         'type' => 'info'
+                    ]
+        ]);
+    }
+
+    public function addStudents(Request $request)
+    {
+        $attrs = $request->validate([
+            'students' => 'required|Array'
+        ]);
+
+        $added = 0;
+        $duplicates = 0;
+        foreach($attrs['students'] as $student){
+            if(Student::where('email', $student['email'])->exists()){
+                $duplicates++;
+            } else {
+                Student::create($student);
+                $added++;
+            }
+        }
+        if($added <= 1){
+            $msg = "$added student added";
+        } else {
+            $msg = "$added students added";
+        }
+        if($duplicates == 1){
+            $msg .= " - 1 duplicate, not added.";
+        }
+        if($duplicates >1){
+            $msg .= " - $duplicates duplicates, not added.";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => [
+                        'text' => $msg,
+                        'type' => 'success'
                     ]
         ]);
     }

@@ -1,6 +1,6 @@
 <template>
-    <v-data-table :items="userItems" v-if="isReady">
-        <template v-slot:item.CPE="{ value }">
+    <v-data-table :headers="headers" :items="userItems" v-if="isReady">
+        <template v-slot:item.isCPE="{ value }">
           <v-icon icon="mdi-check" color="success" v-if="value"/>
       </template>
     </v-data-table>
@@ -9,10 +9,20 @@
     import { computed } from "vue";
     import { useAdminStore } from '@/stores/useAdminStore';
     import { storeToRefs } from 'pinia';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     const adminStore = useAdminStore();
     const { getUsers } = adminStore;
     const { users, isLoading, isReady } = storeToRefs(adminStore);
+
+    const headers = [
+        { title: t('Name'), key: 'name' },
+        { title: t('Email'), key: 'email' },
+        { title: t('Registered on'), key: 'registered', align: 'center' },
+        { title: 'CPE', key: 'isCPE', align: 'center' }
+    ];
 
     getUsers();
 
@@ -21,8 +31,8 @@
             return users.value.map(u => ({
                 name: u.name,
                 email: u.email,
-                Registered: formatDate(u.created_at),
-                CPE: u.is.cpe
+                registered: formatDate(u.created_at),
+                isCPE: u.is.cpe
             }));
         }
         return [];
