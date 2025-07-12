@@ -9,7 +9,7 @@
                     <div class="d-flex ga-2 pt-2">
                         <v-select variant="outlined" :label="$t('Level')" v-model="newStudent.level" :items="levels"/>
                         <v-select variant="outlined" :label="$t('Section')" v-model="newStudent.section" :items="['A', 'B', 'C', 'D', 'E']"/>
-                        <v-select variant="outlined" :label="$t('Status')" v-model="newStudent.status" :items="[$t('Blue'), $t('Red'), $t('Black')]"/>
+                        <v-select variant="outlined" :label="$t('Status')" v-model="newStudent.status" :items="statusOptions"/>
                     </div>
                     <v-window v-model="AddStudentWindow">
                         <v-window-item value="0">
@@ -20,12 +20,15 @@
                             </div>
                         </v-window-item>
                         <v-window-item value="1">
-                            <div class="d-flex ga-2 pt-2">
-                                <v-text-field variant="outlined" :label="$t('Last Name')" v-model="newStudent.lastName"/>
-                                <v-text-field variant="outlined" :label="$t('First Name')" v-model="newStudent.firstName"/>
+                            <div class="d-flex ga-2 py-3">
+                                <std-text-input v-model="newStudent.lastName" label="Last Name"/>
+                                <std-text-input v-model="newStudent.firstName" label="First Name"/>
+                                <!-- <v-text-field variant="outlined" :label="$t('Last Name')" v-model="newStudent.lastName"/>
+                                <v-text-field variant="outlined" :label="$t('First Name')" v-model="newStudent.firstName"/> -->
                             </div>
                             <div class="d-flex ga-2">
-                                <v-text-field variant="outlined" :label="$t('Email')" v-model="newStudent.email"/>
+                                <std-text-input v-model="newStudent.email" label="Email"/>
+                                <!-- <v-text-field variant="outlined" :label="$t('Email')" v-model="newStudent.email"/> -->
                                 <v-number-input control-variant="hidden" variant="outlined" :label="$t('Tag number')" v-model="newStudent.tagNb"/>
                             </div>
                             <div class="d-flex justify-end">
@@ -118,6 +121,9 @@
     const newStudents = ref([]);
     const showHelp = ref(false);
     const levels = ['6e', '5e', '4e', '3e', '2nde', '1re', 'Term', 'Y7', 'Y8', 'Y9', 'Y10', 'Y11', 'Y12'];
+    const statusOptions = [
+        { title: t('Blue'), value: 'blue' }, { title: t('Red'), value: 'red' }, {title: t('Black'), value: 'black'}
+    ];
     const sortRaw = (a,b) => {
         const levelA = levels.indexOf(a.level);
         const levelB = levels.indexOf(b.level);
@@ -180,19 +186,22 @@
         let clipboardText = '';
 
         clipboardText = await navigator.clipboard.readText();
+        console.log(clipboardText);
         const rows = clipboardText.split('\n').map(row => row.split('\t'));
 
         rows.forEach(row => {
-            newStudents.value.push({
-                id: id++,
-                level: newStudent.value.level,
-                section: newStudent.value.section,
-                status: newStudent.value.status,
-                lastName: row[0].toUpperCase(),
-                firstName: formatFirstName(row[1]),
-                email: row[2],
-                tagNb: row[3]
-            });
+            if (row.length >= 3 && row[0]) {
+                newStudents.value.push({
+                    id: id++,
+                    level: newStudent.value.level,
+                    section: newStudent.value.section,
+                    status: newStudent.value.status,
+                    lastName: row[0].toUpperCase(),
+                    firstName: formatFirstName(row[1]),
+                    email: row[2],
+                    tagNb: row[3]
+                });
+            }
         });
     }
 

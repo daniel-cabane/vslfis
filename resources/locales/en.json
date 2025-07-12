@@ -31,6 +31,9 @@
     "Blue": "Blue",
     "Red": "Red",
     "Black": "Black",
+    "blue": "Blue",
+    "red": "Red",
+    "black": "Black",
     "Status": "Status",
     "Add": "Add",
     "Add one": "Add one",
@@ -44,5 +47,13 @@
     "Class": "Class",
     "Remove": "Remove",
     "Students added": "Students added",
-    "Registered on": "Registered on"
+    "Registered on": "Registered on",
+    "Edit student": "Edit student",
+    "Student updated": "Student updated",
+    "Are you sure you want to delete this student ?": "Are you sure you want to delete this student ?",
+    "Missing": "Missing",
+    "Student deleted": "Student deleted",
+    "Badgeless students": "Badgeless students",
+    "Query result": "Query result",
+    "Photo updated": "Photo updated"
 }

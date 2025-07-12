@@ -19,7 +19,7 @@
     "Delete": "Supprimer",
     "Close": "Fermer",
     "Confirm": "Confirmer",
-    "Are you sure you want to delete this user ?": "Êtes-vous sûr de vouloir supprimer cet Utilisateur ?",
+    "Are you sure you want to delete this user ?": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
     "Yes I am sure": "Oui je suis sûr",
     "Change your name": "Modifier votre nom",
     "Cancel": "Annuler",
@@ -31,6 +31,9 @@
     "Blue": "Bleu",
     "Red": "Rouge",
     "Black": "Noir",
+    "blue": "Bleu",
+    "red": "Rouge",
+    "black": "Noir",
     "Status": "Statut",
     "Add": "Ajouter",
     "Add one": "Ajouter un",
@@ -44,5 +47,13 @@
     "Class": "Classe",
     "Remove": "Supprimer",
     "Students added": "Élèves ajoutés",
-    "Registered on": "Inscrit le"
+    "Registered on": "Inscrit le",
+    "Edit student": "Modifier l'élève",
+    "Student updated": "Élève mis à jour",
+    "Are you sure you want to delete this student ?": "Êtes-vous sûr de vouloir supprimer cet élève ?",
+    "Missing": "Manquant",
+    "Student deleted": "Élève supprimé",
+    "Badgeless students": "Élèves sans numéro de badge",
+    "Query result": "Résultats de la recherche",
+    "Photo updated": "Photo mise à jour"
 }

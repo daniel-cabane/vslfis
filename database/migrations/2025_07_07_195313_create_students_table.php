@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('firstName');
             $table->string('email')->unique();
             $table->unsignedInteger('tagNb')->nullable();
+            $table->string('photo')->nullable();
             $table->string('level', 255)->nullable();
             $table->string('section', 255)->nullable();
             $table->string('status')->nullable();

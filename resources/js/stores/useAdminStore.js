@@ -6,18 +6,9 @@ const { get, post, patch, del, isLoading } = useAPI();
 export const useAdminStore = defineStore('admin', {
     state: () => ({
         isReady: false,
-        users: [],
-        students: [],
-        student: {}
+        users: []
     }),
     actions: {
-        async getUsers() {
-            this.isReady = false;
-            this.users = [];
-            const res = await get('/api/admin/users');
-            this.users = res.users;
-            this.isReady = true;
-        },
         async getRecentUsers() {
             this.isReady = false;
             this.users = [];

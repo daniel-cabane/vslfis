@@ -34,6 +34,11 @@ Route::group(['middleware'=>['role:admin']], function(){
 Route::group(['middleware'=>['role:admin|cpe']], function(){
     Route::get('/admin/users', [AdminController::class, 'indexUsers']);
     Route::post('/admin/students', [AdminController::class, 'addStudents']);
+    Route::patch('/admin/students/{student}', [AdminController::class, 'updateStudent']);
+    Route::post('/admin/students/{student}/photo', [AdminController::class, 'updateStudentPhoto']);
+    Route::delete('/admin/students/{student}', [AdminController::class, 'deleteStudent']);
+    Route::get('/admin/students/badgeless', [AdminController::class, 'badgelessStudents']);
+    Route::get('/admin/students/search', [AdminController::class, 'searchStudents']);
 });
 
 
@@ -46,3 +51,9 @@ Route::group(['middleware'=>['role:admin|cpe']], function(){
 Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::patch('/user/name', [UserController::class, 'updateName']);
 });
+
+/*
+*
+*   STUDENTS
+* 
+*/

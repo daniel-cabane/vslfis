@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Student;
 
@@ -112,6 +113,86 @@ class AdminController extends Controller
                         'text' => $msg,
                         'type' => 'success'
                     ]
+        ]);
+    }
+
+    public function badgelessStudents()
+    {
+        return response()->json([
+            'students' => Student::where('tagNb', null)->get()
+        ]);
+    }
+
+    public function searchStudents(Request $request)
+    {
+        $name = $request->validate(['name' => 'required|max:100'])['name'];
+
+        $students = Student::when($name, function ($queryBuilder) use ($name) {
+            return $queryBuilder->where(function ($query) use ($name) {
+                $query->where('firstName', 'LIKE', "%{$name}%")
+                      ->orWhere('email', 'like', "%$name%")
+                      ->orWhere('lastName', 'LIKE', "%{$name}%")
+                      ->orWhere(DB::raw("CONCAT(firstName, ' ', lastName)"), 'LIKE', "%{$name}%");
+            });
+        })->get();
+
+        return response()->json(['students' => $students]);
+    }
+
+    public function updateStudent(Student $student, Request $request)
+    {
+        $attrs = $request->validate([
+            'lastName' => 'required|String|max:40',
+            'firstName' => 'required|String|max:40',
+            'email' => 'required|Email|max:100',
+            'tagNb' => 'sometimes|Integer|nullable',
+            'level' => 'required|String|max:10',
+            'section' => 'required|String|max:4',
+            'status' => 'required|String|max:40',
+        ]);
+
+        $student->update($attrs);
+
+        return response()->json([
+            'success' => true,
+            'student' => $student,
+            'message' => [
+                        'text' => 'Student updated',
+                        'type' => 'success'
+                    ]
+        ]);
+    }
+
+    public function updateStudentPhoto(Student $student, Request $request)
+    {
+        $request->validate([
+        'photo' => 'required|image|max:512' // max 512 KB
+    ]);
+
+    $path = $request->file('photo')->store('students', 'public');
+    $student->photo = '/storage/' . $path;
+    $student->save();
+
+    return response()->json([
+            'success' => true,
+            'student' => $student,
+            'message' => [
+                'text' => 'Photo updated',
+                'type' => 'success'
+            ]
+        ]);
+    }
+
+    public function deleteStudent(Student $student)
+    {
+        $student->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => [
+                'text' => 'Student deleted',
+                'type' => 'info'
+            ]
         ]);
     }
 }
