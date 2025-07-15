@@ -186,7 +186,6 @@
         let clipboardText = '';
 
         clipboardText = await navigator.clipboard.readText();
-        console.log(clipboardText);
         const rows = clipboardText.split('\n').map(row => row.split('\t'));
 
         rows.forEach(row => {

@@ -14,4 +14,9 @@ class Student extends Model
             'details' => 'object'
         ];
     }
+
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class);
+    }
 }

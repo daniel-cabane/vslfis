@@ -1,22 +1,22 @@
 <template>
     <v-container>
-        <v-btn color="primary" @click="addOne">Add</v-btn>
-        <div v-for="n in notifs">{{ n.text }}</div>
+        <report-buttons @report="initReport"/>
+        <v-dialog v-model="dialog" fullscreen scrollable>
+            <report-card :type="reportType" @changeType="changeType" @cancel="dialog=false"/>
+        </v-dialog>
     </v-container>
 </template>
 <script setup>
     import { ref } from "vue";
-    import useNotifications from '@/composables/useNotifications';
-    
-    const { addNotification } = useNotifications();
 
-    const notifs = ref([]);
+    const dialog = ref(false);
 
-    const addOne = () => {
-        const text = Math.random().toString(36).substring(2, 10);
-        const colors = ['primary', 'error', 'warning', 'info']
-        const type = colors[Math.floor(Math.random() * colors.length)];
-        notifs.value.push({text, type});
-        addNotification({text, type});
+    const reportType = ref(null);
+    const changeType = type => {
+        reportType.value = type;
+    }
+    const initReport = type => {
+        reportType.value = type;
+        dialog.value = true;
     }
 </script>

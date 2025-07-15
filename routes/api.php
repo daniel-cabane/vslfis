@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -54,6 +56,10 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
 
 /*
 *
-*   STUDENTS
+*   STUDENTS AND REPORTS
 * 
 */
+
+Route::get('/students/search', [StudentController::class, 'searchStudents']);
+
+Route::post('/reports', [ReportController::class, 'store']);

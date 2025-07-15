@@ -1,5 +1,6 @@
 <template>
     <v-text-field 
+        class="pt-2"
         variant="outlined"
         v-model="name"
         :label="$t(label)"
