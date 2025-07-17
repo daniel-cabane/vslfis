@@ -26,5 +26,5 @@
     const authStore = useAuthStore();
     const { user } = storeToRefs(authStore);
 
-    const tab = ref("students");
+    const tab = ref("users");
 </script>

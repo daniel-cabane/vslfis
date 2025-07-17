@@ -60,6 +60,11 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
 * 
 */
 
-Route::get('/students/search', [StudentController::class, 'searchStudents']);
-
-Route::post('/reports', [ReportController::class, 'store']);
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    Route::get('/students/search', [StudentController::class, 'searchStudents']);
+    
+    Route::get('/reports', [ReportController::class, 'index']);
+    Route::get('/reports/myReports', [ReportController::class, 'myReports']);
+    Route::post('/reports', [ReportController::class, 'store']);
+    Route::patch('/reports/{report}', [ReportController::class, 'update']);
+});

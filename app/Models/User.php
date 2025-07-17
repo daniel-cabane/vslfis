@@ -60,4 +60,9 @@ class User extends Authenticatable
           'admin' => $this->hasRole('admin')
       ];
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
 }

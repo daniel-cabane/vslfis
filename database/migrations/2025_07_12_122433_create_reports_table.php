@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('reporter_id');
             $table->string('category', 255);
             $table->string('location')->nullable();
-            $table->string('comment')->nullable();
+            $table->text('comment')->nullable();
             $table->unsignedBigInteger('filed_by')->nullable();
             $table->timestamps();
  

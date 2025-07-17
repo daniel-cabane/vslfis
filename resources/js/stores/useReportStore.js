@@ -9,7 +9,7 @@ export const useReportStore = defineStore('report', {
         students: [],
         reports: [],
         report: {},
-        types: [
+        categories: [
             { title: 'phone', description: 'Using phone outside of designated areas', icon: 'mdi-cellphone', color: 'blue'},
             { title: 'computer', description: 'Using computer outside of designated areas', icon: 'mdi-laptop', color: 'purple'},
             { title: 'behaviour', description: 'Problematic behaviour', icon: 'mdi-human-handsup', color: 'red'},
@@ -26,6 +26,10 @@ export const useReportStore = defineStore('report', {
         removeStudent(student) {
             this.students = this.students.filter(s => s.id != student.id);
         },
+        fillCategory(report){
+            report.category = this.categories.find(c => c.title == report.category);
+            return report;
+        },
         async searchStudents(name){
             this.students = [];
             this.ressourceStatus = 'Query result';
@@ -35,9 +39,21 @@ export const useReportStore = defineStore('report', {
         async saveReport(data) {
             const res = await post('/api/reports', data);
             if(res.success){
-                this.reports.unshift(res.report);
+                this.reports.unshift(this.fillCategory(res.report));
             }
             return res.success
+        },
+        async updateReport(data) {
+            const res = await patch(`/api/reports/${data.id}`, data);
+            if(res.success){
+                this.reports = this.reports.map(r => r.id == data.id ? this.fillCategory(res.report) : r);
+            }
+            return res.success
+        },
+        async myReports() {
+            const res = await get('/api/reports/myReports');
+            this.reports = res.reports.map(r => this.fillCategory(r));
+            console.log(this.reports);
         }
     },
     getters: {

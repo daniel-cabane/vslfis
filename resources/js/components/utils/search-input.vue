@@ -26,7 +26,7 @@
         typingTimer = setTimeout(() => {
             if(name.value.length == 0){
                 emit('empty');
-            } else if(name.value.length > 2) {
+            } else if(name.value.length >= 2) {
                 emit('search', name.value);
             }
         }, 1000);

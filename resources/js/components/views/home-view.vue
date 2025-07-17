@@ -1,9 +1,18 @@
 <template>
     <v-container>
-        <report-buttons @report="initReport"/>
+        <init-report-buttons @report="initReport"/>
         <v-dialog v-model="dialog" fullscreen scrollable>
-            <report-card :type="reportType" @changeType="changeType" @cancel="dialog=false"/>
+            <report-card :report="report" @close="dialog=false"/>
         </v-dialog>
+        <v-fab 
+            app 
+            location="right bottom" 
+            color="primary" 
+            extended 
+            prepend-icon="mdi-history" 
+            :text="$t('History')" 
+            :to="'/history'"
+        />
     </v-container>
 </template>
 <script setup>
@@ -11,12 +20,10 @@
 
     const dialog = ref(false);
 
-    const reportType = ref(null);
-    const changeType = type => {
-        reportType.value = type;
-    }
-    const initReport = type => {
-        reportType.value = type;
+    const report = ref(null);
+
+    const initReport = category => {
+        report.value = {category, comment: '', location: '', students: []};
         dialog.value = true;
     }
 </script>

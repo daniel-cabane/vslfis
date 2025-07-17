@@ -17,12 +17,12 @@
     const { getUsers } = adminStore;
     const { users, isLoading, isReady } = storeToRefs(adminStore);
 
-    const headers = [
+    const headers = computed(() => [
         { title: t('Name'), key: 'name' },
         { title: t('Email'), key: 'email' },
         { title: t('Registered on'), key: 'registered', align: 'center' },
         { title: 'CPE', key: 'isCPE', align: 'center' }
-    ];
+    ]);
 
     getUsers();
 
