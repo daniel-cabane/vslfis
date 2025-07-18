@@ -27,15 +27,16 @@ class ReportController extends Controller
             'category' => 'required|max:50',
             'students' => 'sometimes|array|nullable',
             'location' => 'sometimes|max:100|nullable',
-            'comment' => 'sometimes|max:500|nullable'
+            'comment' => 'sometimes|max:500|nullable',
+            'finalized' => 'required|boolean'
         ]);
 
         $report = Report::create([
             'reporter_id' => auth()->id(),
             'category' => $attrs['category'],
             'location' => $attrs['location'],
-            'comment' => $attrs['comment']
-            
+            'comment' => $attrs['comment'],
+            'finalized' => $attrs['finalized']
         ]);
 
         foreach($attrs['students'] as $student){
@@ -58,15 +59,16 @@ class ReportController extends Controller
             'category' => 'required|max:50',
             'students' => 'sometimes|array|nullable',
             'location' => 'sometimes|max:100|nullable',
-            'comment' => 'sometimes|max:500|nullable'
+            'comment' => 'sometimes|max:500|nullable',
+            'finalized' => 'required|boolean'
         ]);
 
         $report->update([
             'reporter_id' => auth()->id(),
             'category' => $attrs['category'],
             'location' => $attrs['location'],
-            'comment' => $attrs['comment']
-            
+            'comment' => $attrs['comment'],
+            'finalized' => $attrs['finalized']
         ]);
 
         $report->students()->sync([]);
@@ -79,6 +81,44 @@ class ReportController extends Controller
             'report' => $report->format(),
             'message' => [
                         'text' => 'Report updated',
+                        'type' => 'success'
+                    ]
+        ]);
+    }
+
+    public function destroy(Report $report)
+    {
+        $report->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => [
+                        'text' => 'Report deleted',
+                        'type' => 'info'
+                    ]
+        ]);
+    }
+
+    public function file(Report $report)
+    {
+        if(!$report->finalized){
+            return response()->json([
+            'message' => [
+                        'text' => 'Report has to be finalized to be filed',
+                        'type' => 'error'
+                    ]
+            ]);
+        }
+
+        $report->update([
+            'filed_by' => auth()->id()
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'report' => $report->format(),
+            'message' => [
+                        'text' => 'Report marked as filed',
                         'type' => 'success'
                     ]
         ]);

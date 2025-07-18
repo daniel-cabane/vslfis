@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('category', 255);
             $table->string('location')->nullable();
             $table->text('comment')->nullable();
+            $table->boolean('finalized')->default(1);
             $table->unsignedBigInteger('filed_by')->nullable();
             $table->timestamps();
  

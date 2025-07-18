@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    protected $fillable = ['reporter_id', 'category', 'location', 'comment', 'filed_by'];
+    protected $fillable = ['reporter_id', 'category', 'location', 'comment', 'finalized', 'filed_by'];
 
     public function reporter()
     {
@@ -34,6 +34,7 @@ class Report extends Model
             'category' => $this->category,
             'location' => $this->location,
             'comment' => $this->comment,
+            'finalized' => $this->finalized == 1,
             'students' => $this->students->map(fn($s) => [
                 'id' => $s->id, 
                 'firstName' => $s->firstName, 

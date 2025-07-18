@@ -46,13 +46,15 @@
             </div>
         </v-card-text>
         <v-card-actions class="pt-0">
+            <v-icon icon="mdi-check-circle" color="success" size="large" v-if="report.filedBy"/>
+            <v-icon icon="mdi-close-circle" color="faded" size="large" v-else-if="report.finalized"/>
+            <v-icon icon="mdi-close-circle" color="error" size="large" v-else/>
             <v-spacer/>
             <v-btn icon="mdi-eye" color="primary" @click="emit('reportDetails', report)"/>
         </v-card-actions>
     </v-card>
 </template>
 <script setup>
-    import { computed } from "vue";
     import { useReportStore } from '@/stores/useReportStore';
     import { useI18n } from 'vue-i18n';
 

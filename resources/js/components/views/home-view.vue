@@ -23,7 +23,7 @@
     const report = ref(null);
 
     const initReport = category => {
-        report.value = {category, comment: '', location: '', students: []};
+        report.value = {category, comment: '', location: '', finalized: true, students: []};
         dialog.value = true;
     }
 </script>

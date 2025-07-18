@@ -83,6 +83,17 @@
     "Reported by": "Reported by",
     "Not specified": "Not specified",
     "None": "None",
-    "Report updated": "Report updated"
-
+    "Report updated": "Report updated",
+    "Are you sure ?": "Are you sure ?",
+    "Yes, delete this report": "Yes, delete this report",
+    "Report deleted": "Report deleted",
+    "Finalized": "Finalized",
+    "Not finalized": "Not finalized",
+    "Report has to be finalized to be filed": "Report has to be finalized to be filed",
+    "Not filed yet": "Not filed yet",
+    "Filed on Pronote by": "Filed on Pronote by",
+    "File on Pronote": "File on Pronote",
+    "Did you file this report on Pronote ?": "Did you file this report on Pronote ?",
+    "Yes": "Yes",
+    "No": "No"
 }

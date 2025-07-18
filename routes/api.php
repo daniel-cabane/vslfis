@@ -66,5 +66,10 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/reports', [ReportController::class, 'index']);
     Route::get('/reports/myReports', [ReportController::class, 'myReports']);
     Route::post('/reports', [ReportController::class, 'store']);
+    Route::post('/reports/{report}/file', [ReportController::class, 'file']);
+});
+
+Route::group(['middleware'=>['can:update,report']], function(){
     Route::patch('/reports/{report}', [ReportController::class, 'update']);
+    Route::delete('/reports/{report}', [ReportController::class, 'destroy']);
 });

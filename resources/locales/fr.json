@@ -84,5 +84,17 @@
     "+{n} more": "+{n} autre",
     "Not specified": "Non précisé",
     "None": "Aucun",
-    "Report updated": "Rapport mis à jour"
+    "Report updated": "Rapport mis à jour",
+    "Are you sure ?": "Are you sure ?",
+    "Yes, delete this report": "Oui, supprimer ce rapport",
+    "Report deleted": "Rapport supprimé",
+    "Finalized": "Finalisé",
+    "Not finalized": "Non finalisé",
+    "Report has to be finalized to be filed": "Le rapport doit être finalisé avant d'être porté",
+    "Not filed yet": "Pas encore porté sur Pronote",
+    "Filed on Pronote by": "Porté sur Pronote par",
+    "File on Pronote": "Porter sur Pronote",
+    "Did you file this report on Pronote ?": "Avez-vous porté ce rapport sur Pronote ?",
+    "Yes": "Oui",
+    "No": "Non"
 }

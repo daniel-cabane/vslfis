@@ -28,7 +28,8 @@ const customLight = {
         info: '#2196F3',
         success: '#4CAF50',
         warning: '#FF9800',
-        muted: '#9E9E9E'
+        muted: '#AFAFAF',
+        faded: '#D8D8D8'
     }
 }
 const customDark = {
@@ -44,7 +45,8 @@ const customDark = {
         info: '#BBDEFB',
         success: '#C8E6C9',
         warning: '#FFE082',
-        muted: '#CDCECE'
+        muted: '#BCBDBD',
+        faded: '#7A7C7D'
     }
 }
 

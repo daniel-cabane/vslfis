@@ -74,16 +74,49 @@
             <v-btn variant="tonal" color="error" :text="$t('Cancel')" @click="mode='view'" v-if="mode=='edit' && report.id"/>
             <v-btn variant="tonal" color="error" :text="$t('Close')" @click="closeDialog" v-else/>
             <v-spacer/>
-            <v-btn variant="flat" color="primary" :text="$t('Confirm')" @click="confirmReport" v-if="mode=='edit'"/>
+            <div class="d-flex align-center" v-if="mode=='edit'">
+                <v-switch color="primary" class="mr-2" inset v-model="finalized" hide-details/>
+                <span class="mr-4 text-h6 font-weight-bold" :class="finalized ? 'text-primary' : 'text-faded'">
+                    {{ $t('Finalized') }}
+                </span>
+                <v-btn variant="flat" color="primary" :text="$t('Confirm')" @click="confirmReport"/>
+            </div>
             <v-fab class="justify-end" :color="open ? '' : 'primary'" icon v-else>
                 <v-icon>{{ open ? 'mdi-close' : 'mdi-menu' }}</v-icon>
                 <v-speed-dial v-model="open" location="top" transition="slide-y-reverse-transition" activator="parent">
-                <v-btn key="1" color="success" icon="mdi-check"/>
-                <v-btn key="2" color="info" icon="mdi-pencil" @click="mode='edit'"/>
-                <v-btn key="4" color="error" icon="mdi-delete"/>
+                    <v-btn key="1" :color="finalized ? 'success' : 'grey'" icon="mdi-check" @click="fileDialog=true"/>
+                    <v-btn key="2" color="info" icon="mdi-pencil" @click="mode='edit'"/>
+                    <v-btn key="3" color="error" icon="mdi-delete" @click="deleteDialog=true"/>
                 </v-speed-dial>
             </v-fab>
         </v-card-actions>
+        <v-dialog v-model="deleteDialog" width="450">
+            <v-card :title="$t('Are you sure ?')">
+                <v-card-text>
+                    <v-checkbox v-model="confirmDelete" :label="$t('Yes, delete this report')" hide-details/>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer/>
+                    <v-btn variant="tonal" color="primary" :text="$t('Cancel')" @click="deleteDialog=false"/>
+                    <v-btn variant="flat" color="error" :text="$t('Delete')" :disabled="!confirmDelete" @click="proceedDelete"/>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="fileDialog" width="450">
+            <v-card :title="$t('File on Pronote')">
+                <v-card-text v-if="finalized">
+                    {{ $t('Did you file this report on Pronote ?') }}
+                </v-card-text>
+                <v-card-text class="text-error" v-else>
+                    {{ $t('Report has to be finalized to be filed') }}
+                </v-card-text>
+                <dialog-footer cancel-text="No" confirm-text="Yes" @yes="fileReport(report.id)" @no="fileDialog=false" v-if="finalized"/>
+                <v-card-actions v-else>
+                    <v-spacer/>
+                    <v-btn variant="tonal" color="primary" :text="$t('Close')" @click="fileDialog=false"/>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-dialog v-model="photoDialog">
             <img style="max-width:90vw;max-height:90vh;object-fit:contain;position:relative;" :src="photoUrl"/>
             <v-btn icon="mdi-close" color="error" style="position:fixed;top:10px;right:10px;" @click="photoDialog=false"/>
@@ -96,7 +129,7 @@
     import { storeToRefs } from 'pinia';
 
     const reportStore = useReportStore();
-    const { searchStudents, purgeStudents, removeStudent, addStudent, saveReport, updateReport, categories } = reportStore;
+    const { searchStudents, purgeStudents, removeStudent, addStudent, saveReport, updateReport, deleteReport, fileReport, categories } = reportStore;
     const { students, isLoading } = storeToRefs(reportStore);
 
     const props = defineProps({ report: Object });
@@ -116,6 +149,7 @@
     const location = ref(props.report.location);
     const comment = ref(props.report.comment);
     const category = ref(props.report.category);
+    const finalized = ref(props.report.finalized);
     const photoDialog = ref(false);
     const photoUrl = ref(null);
     const showPhoto = url => {
@@ -147,7 +181,8 @@
                 category: category.value.title,
                 students: involvedStudents.value.map(s => s.id),
                 location: location.value,
-                comment: comment.value
+                comment: comment.value,
+                finalized: finalized.value,
             });
             if(res){
                 closeDialog();
@@ -157,11 +192,21 @@
                 category: category.value.title,
                 students: involvedStudents.value.map(s => s.id),
                 location: location.value,
-                comment: comment.value
+                comment: comment.value,
+                finalized: finalized.value,
             });
             if(res){
                 closeDialog();
             }
         }
     }
+
+    const deleteDialog = ref(false);
+    const confirmDelete = ref(false);
+    const proceedDelete = async () => {
+        await deleteReport(props.report.id);
+        closeDialog();
+    }
+
+    const fileDialog = ref(false);
 </script>

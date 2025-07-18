@@ -48,6 +48,20 @@ export const useReportStore = defineStore('report', {
             if(res.success){
                 this.reports = this.reports.map(r => r.id == data.id ? this.fillCategory(res.report) : r);
             }
+            return res.success;
+        },
+        async fileReport(id){
+            const res = await post(`/api/reports/${id}/file`);
+            if(res.success){
+                this.reports = this.reports.map(r => r.id == id ? this.fillCategory(res.report) : r);
+            }
+            return res.success;
+        },
+        async deleteReport(id){
+            const res = await del(`/api/reports/${id}`);
+            if(res.success){
+                this.reports = this.reports.filter(r => r.id != id);
+            }
             return res.success
         },
         async myReports() {
