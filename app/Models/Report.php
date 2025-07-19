@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 
 class Report extends Model
 {
@@ -46,7 +47,9 @@ class Report extends Model
                 'id' => $this->filedBy->id,
                 'name' => $this->filedBy->name
             ] : null,
-            'on' => $this->created_at
+            'on' => $this->created_at,
+            'editable' => Gate::allows('update', $this),
+            'deletable' => Gate::allows('delete', $this),
         ];
     }
 }

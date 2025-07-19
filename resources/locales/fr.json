@@ -90,11 +90,20 @@
     "Report deleted": "Rapport supprimé",
     "Finalized": "Finalisé",
     "Not finalized": "Non finalisé",
-    "Report has to be finalized to be filed": "Le rapport doit être finalisé avant d'être porté",
+    "Report has to be finalized to be filed on Pronote": "Le rapport doit être finalisé avant d'être porté sur Pronote",
     "Not filed yet": "Pas encore porté sur Pronote",
     "Filed on Pronote by": "Porté sur Pronote par",
     "File on Pronote": "Porter sur Pronote",
     "Did you file this report on Pronote ?": "Avez-vous porté ce rapport sur Pronote ?",
     "Yes": "Oui",
-    "No": "Non"
+    "No": "Non",
+    "Category": "Categorie",
+    "Nb students": "Nb élèves",
+    "View": "Voir",
+    "You cannot delete this report": "Vous ne pouvez pas supprimer ce rapport",
+    "You cannot edit this report": "Vous ne pouvez pas modifier ce rapport",
+    "Report marked as filed": "Rapport marqué comme porté",
+    "Cancel filing": "Annuler le portage",
+    "Do you want to cancel the filed status ?": "Voulez vous marquer ce rapport comme non porté sur Pronote ?",
+    "Report marked as unfiled": "Rapport marqué comme non porté"
 }

@@ -57,6 +57,13 @@ export const useReportStore = defineStore('report', {
             }
             return res.success;
         },
+        async unfileReport(id){
+            const res = await post(`/api/reports/${id}/unfile`);
+            if(res.success){
+                this.reports = this.reports.map(r => r.id == id ? this.fillCategory(res.report) : r);
+            }
+            return res.success;
+        },
         async deleteReport(id){
             const res = await del(`/api/reports/${id}`);
             if(res.success){
@@ -66,6 +73,10 @@ export const useReportStore = defineStore('report', {
         },
         async myReports() {
             const res = await get('/api/reports/myReports');
+            this.reports = res.reports.map(r => this.fillCategory(r));
+        },
+        async getReports() {
+            const res = await get('/api/reports');
             this.reports = res.reports.map(r => this.fillCategory(r));
             console.log(this.reports);
         }

@@ -89,11 +89,20 @@
     "Report deleted": "Report deleted",
     "Finalized": "Finalized",
     "Not finalized": "Not finalized",
-    "Report has to be finalized to be filed": "Report has to be finalized to be filed",
+    "Report has to be finalized to be filed on Pronote": "Report has to be finalized to be filed on Pronote",
     "Not filed yet": "Not filed yet",
     "Filed on Pronote by": "Filed on Pronote by",
     "File on Pronote": "File on Pronote",
     "Did you file this report on Pronote ?": "Did you file this report on Pronote ?",
     "Yes": "Yes",
-    "No": "No"
+    "No": "No",
+    "Category": "Category",
+    "Nb students": "Nb students",
+    "View": "View",
+    "You cannot delete this report": "You cannot delete this report",
+    "You cannot edit this report": "You cannot edit this report",
+    "Report marked as filed": "Report marked as filed",
+    "Cancel filing": "Cancel filing",
+    "Do you want to cancel the filing status ?": "Do you want to cancel the filing status ?",
+    "Report marked as unfiled": "Report marked as unfiled"
 }

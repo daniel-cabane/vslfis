@@ -32,7 +32,7 @@
         </div>
         <v-divider class="my-4"/>
         <div class="d-flex justify-center align-center text-h6" v-if="report.filedBy">
-            <v-icon icon="mdi-check-circle" color="primary" size="large"/>
+            <v-icon icon="mdi-check-circle" color="primary" class="mr-2" size="large"/>
             {{ $t('Filed on Pronote by') }} {{ report.filedBy.name }}
         </div>
         <div style="min-height:72px" class="d-flex justify-center align-center text-h6 text-muted font-italic" v-else-if="report.finalized">

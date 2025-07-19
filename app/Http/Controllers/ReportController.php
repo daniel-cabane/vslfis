@@ -123,4 +123,20 @@ class ReportController extends Controller
                     ]
         ]);
     }
+
+    public function unfile(Report $report)
+    {
+        $report->update([
+            'filed_by' => null
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'report' => $report->format(),
+            'message' => [
+                        'text' => 'Report marked as unfiled',
+                        'type' => 'success'
+                    ]
+        ]);
+    }
 }

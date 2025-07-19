@@ -14,6 +14,9 @@
                     />
                 </v-list>
             </v-menu>
+            <div v-else class="d-flex align-center" style="height:100%">
+                <v-icon :icon="category.icon" class="ml-3"/>
+            </div>
             <v-toolbar-title>
                 <div>{{ cap($t(category.title)) }}</div>
                 <div class="text-caption">{{ $t(category.description) }}</div>
@@ -84,9 +87,10 @@
             <v-fab class="justify-end" :color="open ? '' : 'primary'" icon v-else>
                 <v-icon>{{ open ? 'mdi-close' : 'mdi-menu' }}</v-icon>
                 <v-speed-dial v-model="open" location="top" transition="slide-y-reverse-transition" activator="parent">
-                    <v-btn key="1" :color="finalized ? 'success' : 'grey'" icon="mdi-check" @click="fileDialog=true"/>
-                    <v-btn key="2" color="info" icon="mdi-pencil" @click="mode='edit'"/>
-                    <v-btn key="3" color="error" icon="mdi-delete" @click="deleteDialog=true"/>
+                    <v-btn key="1" color="faded" icon="mdi-close-circle" @click="unfileDialog=true" v-if="report.filedBy"/>
+                    <v-btn key="2" color="success" icon="mdi-check" @click="showFileDialog" v-else/>
+                    <v-btn key="3" :color="report.editable ? 'info' : 'grey'" icon="mdi-pencil" @click="editReportMode"/>
+                    <v-btn key="4" :color="report.deletable ? 'error' : 'grey'" icon="mdi-delete" @click="showDeleteDialog"/>
                 </v-speed-dial>
             </v-fab>
         </v-card-actions>
@@ -104,17 +108,22 @@
         </v-dialog>
         <v-dialog v-model="fileDialog" width="450">
             <v-card :title="$t('File on Pronote')">
-                <v-card-text v-if="finalized">
+                <v-card-text>
                     {{ $t('Did you file this report on Pronote ?') }}
                 </v-card-text>
-                <v-card-text class="text-error" v-else>
-                    {{ $t('Report has to be finalized to be filed') }}
-                </v-card-text>
-                <dialog-footer cancel-text="No" confirm-text="Yes" @yes="fileReport(report.id)" @no="fileDialog=false" v-if="finalized"/>
+                <dialog-footer cancel-text="No" confirm-text="Yes" @yes="proceedFileReport(report.id)" @no="fileDialog=false" v-if="finalized"/>
                 <v-card-actions v-else>
                     <v-spacer/>
                     <v-btn variant="tonal" color="primary" :text="$t('Close')" @click="fileDialog=false"/>
                 </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="unfileDialog" width="450">
+            <v-card :title="$t('Cancel filing')">
+                <v-card-text>
+                    {{ $t('Do you want to cancel the filed status ?') }}
+                </v-card-text>
+                <dialog-footer cancel-text="No" confirm-text="Yes" @yes="proceedUnfileReport(report.id)" @no="unfileDialog=false"/>
             </v-card>
         </v-dialog>
         <v-dialog v-model="photoDialog">
@@ -127,9 +136,12 @@
     import { ref, computed } from "vue";
     import { useReportStore } from '@/stores/useReportStore';
     import { storeToRefs } from 'pinia';
+    import useNotifications from '@/composables/useNotifications';
+
+    const { addNotification } = useNotifications();
 
     const reportStore = useReportStore();
-    const { searchStudents, purgeStudents, removeStudent, addStudent, saveReport, updateReport, deleteReport, fileReport, categories } = reportStore;
+    const { searchStudents, purgeStudents, removeStudent, addStudent, saveReport, updateReport, deleteReport, fileReport, unfileReport, categories } = reportStore;
     const { students, isLoading } = storeToRefs(reportStore);
 
     const props = defineProps({ report: Object });
@@ -201,12 +213,50 @@
         }
     }
 
+    const editReportMode = () => {
+        if(props.report.editable){
+            mode.value = 'edit'
+        } else {
+            addNotification({ text: 'You cannot edit this report', type: 'error'})
+        }
+        
+    }
+
     const deleteDialog = ref(false);
     const confirmDelete = ref(false);
+    const showDeleteDialog = () => {
+        if(props.report.deletable){
+            deleteDialog.value = true;
+        } else {
+            addNotification({ text: 'You cannot delete this report', type: 'error'})
+        }
+    }
     const proceedDelete = async () => {
-        await deleteReport(props.report.id);
-        closeDialog();
+        const res = await deleteReport(props.report.id);
+        if(res){
+            closeDialog();
+        }
     }
 
     const fileDialog = ref(false);
+    const showFileDialog = () => {
+        if(props.report.finalized){
+            fileDialog.value = true;
+        } else {
+            addNotification({ text: 'Report has to be finalized to be filed on Pronote', type: 'error'})
+        }
+    }
+    const proceedFileReport = async id => {
+        const res = await fileReport(id);
+        if(res){
+            closeDialog();
+        }
+    }
+    const unfileDialog = ref(false);
+    const proceedUnfileReport = async id => {
+        const res = await unfileReport(id);
+        if(res){
+            closeDialog();
+        }
+    }
 </script>
