@@ -102,8 +102,11 @@
     "View": "Voir",
     "You cannot delete this report": "Vous ne pouvez pas supprimer ce rapport",
     "You cannot edit this report": "Vous ne pouvez pas modifier ce rapport",
-    "Report marked as filed": "Rapport marqué comme porté",
+    "Report marked as filed on Pronote": "Rapport marqué comme porté sur Pronote",
     "Cancel filing": "Annuler le portage",
     "Do you want to cancel the filed status ?": "Voulez vous marquer ce rapport comme non porté sur Pronote ?",
-    "Report marked as unfiled": "Rapport marqué comme non porté"
+    "Report marked as unfiled": "Rapport marqué comme non porté",
+    "Incident report": "Rapport d'incident",
+    "Scan successful": "Scan réussi",
+    "Could not find student": "Élève non trouvé"
 }

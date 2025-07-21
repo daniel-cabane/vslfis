@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // Dev seeding only
         if (App::environment('local')) {
             $this->call(testUserSeeder::class);
+            $this->call(StudentsAndReportsSeeder::class);
         }
     }
 }

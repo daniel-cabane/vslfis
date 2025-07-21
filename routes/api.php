@@ -62,6 +62,7 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
 
 Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/students/search', [StudentController::class, 'searchStudents']);
+    Route::get('/students/tag', [StudentController::class, 'byTag']);
     
     Route::get('/reports', [ReportController::class, 'index']);
     Route::get('/reports/myReports', [ReportController::class, 'myReports']);

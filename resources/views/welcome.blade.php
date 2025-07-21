@@ -36,7 +36,7 @@
                         <router-view></router-view>
                     </v-main>
                     <notification-center></notification-center>
-                    <loading-indicator style='position:fixed;bottom:0px;z-index:1000'></loading-indicator>
+                    <loading-indicator style='position:fixed;top:64px;left:0px;z-index:1000'></loading-indicator>
                     <!-- <div style="position:fixed;top:75px;left:12.5vw;z-index:9999">
                     </div> -->
                 </v-container>

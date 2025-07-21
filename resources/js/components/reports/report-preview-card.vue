@@ -45,7 +45,7 @@
                 </div>
             </div>
         </v-card-text>
-        <v-card-actions class="pt-0">
+        <v-card-actions class="pt-0 pl-3">
             <report-status-icon :report="report"/>
             <v-spacer/>
             <v-btn icon="mdi-eye" color="primary" @click="emit('reportDetails', report)"/>

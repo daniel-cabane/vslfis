@@ -101,8 +101,11 @@
     "View": "View",
     "You cannot delete this report": "You cannot delete this report",
     "You cannot edit this report": "You cannot edit this report",
-    "Report marked as filed": "Report marked as filed",
+    "Report marked as filed on Pronote": "Report marked as filed on Pronote",
     "Cancel filing": "Cancel filing",
     "Do you want to cancel the filing status ?": "Do you want to cancel the filing status ?",
-    "Report marked as unfiled": "Report marked as unfiled"
+    "Report marked as unfiled": "Report marked as unfiled",
+    "Incident report": "Incident report",
+    "Scan successful": "Scan successful",
+    "Could not find student": "Could not find student"
 }

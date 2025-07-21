@@ -67,6 +67,13 @@ export const useStudentStore = defineStore('student', {
         async deleteStudent(student) {
             const res = await del(`/api/admin/students/${student.id}`);
             this.students = this.students.filter(s => s.id != student.id);
+        },
+        async findByTag(nb) {
+            const res = await get(`/api/students/tag?query=Laravel&tag=${nb}`);
+            if(res.student){
+                return res.student;
+            }
+            return false;
         }
     },
     getters: {

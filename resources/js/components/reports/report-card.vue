@@ -88,7 +88,7 @@
                 <v-icon>{{ open ? 'mdi-close' : 'mdi-menu' }}</v-icon>
                 <v-speed-dial v-model="open" location="top" transition="slide-y-reverse-transition" activator="parent">
                     <v-btn key="1" color="faded" icon="mdi-close-circle" @click="unfileDialog=true" v-if="report.filedBy"/>
-                    <v-btn key="2" color="success" icon="mdi-check" @click="showFileDialog" v-else/>
+                    <v-btn key="2" :color="report.finalized ? 'success' : 'grey'" icon="mdi-check" @click="showFileDialog" v-else/>
                     <v-btn key="3" :color="report.editable ? 'info' : 'grey'" icon="mdi-pencil" @click="editReportMode"/>
                     <v-btn key="4" :color="report.deletable ? 'error' : 'grey'" icon="mdi-delete" @click="showDeleteDialog"/>
                 </v-speed-dial>
@@ -170,8 +170,8 @@
             photoDialog.value = true;
         }
     }
-    const getStudentFromScan = nb => {
-        console.log(nb);
+    const getStudentFromScan = student => {
+        involvedStudents.value.push(student);
     }
     const involveStudent = student => {
         involvedStudents.value.push(student);

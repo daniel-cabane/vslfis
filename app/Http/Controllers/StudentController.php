@@ -19,8 +19,31 @@ class StudentController extends Controller
                       ->orWhere('lastName', 'LIKE', "%{$name}%")
                       ->orWhere(DB::raw("CONCAT(firstName, ' ', lastName)"), 'LIKE', "%{$name}%");
             });
-        })->get();
+        })->take(15)->get();
 
         return response()->json(['students' => $students]);
+    }
+
+    public function byTag(Request $request)
+    {
+        $tag = $request->validate(['tag' => 'required|integer'])['tag'];
+
+        $student = Student::where('tagNb', $tag)->first();
+
+        if($student){
+            return response()->json([
+                'student' => $student,
+                'message' => [
+                            'text' => 'Scan successful',
+                            'type' => 'success'
+                        ]
+            ]);
+        }
+        return response()->json([
+                'message' => [
+                            'text' => 'Could not find student',
+                            'type' => 'error'
+                        ]
+            ]);
     }
 }

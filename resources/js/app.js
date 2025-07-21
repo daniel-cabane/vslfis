@@ -37,14 +37,14 @@ const customDark = {
     colors: {
         background: '#4B4D4E',
         surface: '#5A5C5D',
-        primary: '#4FC3F7',
-        'primary-darken-1': '#29B6F6',
-        secondary: '#90A4AE',
-        'secondary-darken-1': '#78909C',
-        error: '#FF5252',
-        info: '#BBDEFB',
-        success: '#C8E6C9',
-        warning: '#FFE082',
+        primary: '#03A9F4',
+        'primary-darken-1': '#0277BD',
+        secondary: '#06205B',
+        'secondary-darken-1': '#041234',
+        error: '#FF1744',
+        info: '#40C4FF', 
+        success: '#00E676',
+        warning: '#FFC107',
         muted: '#BCBDBD',
         faded: '#7A7C7D'
     }

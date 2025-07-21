@@ -3,8 +3,8 @@
         <template v-slot:item="{ item }">
             <tr>
                 <td>
-                    <v-icon :icon="item.category.icon" :color="item.category.color"/>
-                    {{ item.category.title }}
+                    <v-icon class="mr-1" :icon="item.category.icon" :color="item.category.color"/>
+                    {{ cap(item.category.title) }}
                 </td>
                 <td class="text-center">{{ item.students.length }}</td>
                 <td>{{ item.by.name }}</td>
@@ -32,6 +32,7 @@
     getReports();
 
     const { t, locale } = useI18n();
+    const cap = string => string.charAt(0).toUpperCase() + string.slice(1);
 
     const headers = computed(() => [
         { title: t('Category'), key: 'category.title' },
@@ -39,7 +40,7 @@
         { title: t('Reported by'), key: 'by.name' },
         { title: t('Reported on'), key: 'on' },
         { title: t('Status'), key: 'filedBy.name', align: 'center' },
-        { title: t('View'), sortable: false },
+        { title: t('View'), sortable: false, align: 'center' },
     ]);
 
     const formatDateTime = dt => {

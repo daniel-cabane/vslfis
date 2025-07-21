@@ -1,7 +1,7 @@
 <template>
     <v-container class="pt-0">
         <div class="mb-2">
-            <v-btn prepend-icon="mdi-chevron-left" :text="$t('Home')" rounded="pill" @click="router.push('/')"/>
+            <v-btn prepend-icon="mdi-chevron-left" :text="$t('Home')" rounded="pill" :to="'/'"/>
         </div>
         <div class="d-flex flex-wrap ga-2">
             <report-preview-card v-for="report in reports" :report="report" @reportDetails="showDetailsDialog"/>
@@ -14,7 +14,6 @@
 <script setup>
     import { ref } from "vue";
 
-    import { useRouter } from 'vue-router';
     import { useReportStore } from '@/stores/useReportStore';
     import { storeToRefs } from 'pinia';
 
@@ -23,8 +22,6 @@
     const { reports } = storeToRefs(reportStore);
 
     myReports();
-
-    const router = useRouter();
 
     const focusedReport = ref(null);
     const detailsDialog = ref(false);

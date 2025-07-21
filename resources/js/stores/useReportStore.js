@@ -72,13 +72,12 @@ export const useReportStore = defineStore('report', {
             return res.success
         },
         async myReports() {
-            const res = await get('/api/reports/myReports');
+            const res = await get('/api/reports/myReports', true);
             this.reports = res.reports.map(r => this.fillCategory(r));
         },
         async getReports() {
-            const res = await get('/api/reports');
+            const res = await get('/api/reports', true);
             this.reports = res.reports.map(r => this.fillCategory(r));
-            console.log(this.reports);
         }
     },
     getters: {

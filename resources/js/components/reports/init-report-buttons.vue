@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-wrap justify-center ga-2 pa-2">
+    <div class="d-flex flex-wrap justify-center ga-4 pa-2">
         <v-btn 
             v-for="category in categories"
             :text="$t(category.title)"

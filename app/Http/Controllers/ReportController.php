@@ -118,7 +118,7 @@ class ReportController extends Controller
             'success' => true,
             'report' => $report->format(),
             'message' => [
-                        'text' => 'Report marked as filed',
+                        'text' => 'Report marked as filed on Pronote',
                         'type' => 'success'
                     ]
         ]);
