@@ -4,6 +4,7 @@
             <v-tab value="users">{{ $t('Users') }}</v-tab>
             <v-tab value="usersplus" v-if="user.is.admin">{{ $t('Users') }}+</v-tab>
             <v-tab value="students">{{ $t('Students') }}</v-tab>
+            <v-tab value="photos">{{ $t('Photos') }}</v-tab>
         </v-tabs>
         <v-tabs-window v-model="tab">
             <v-tabs-window-item value="users">
@@ -14,6 +15,9 @@
             </v-tabs-window-item>
             <v-tabs-window-item value="students">
                 <admin-student-management/>
+            </v-tabs-window-item>
+            <v-tabs-window-item value="photos">
+                <admin-photo-upload/>
             </v-tabs-window-item>
         </v-tabs-window>
     </v-container>

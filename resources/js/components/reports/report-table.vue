@@ -1,5 +1,16 @@
 <template>
-    <v-data-table :items-per-page-options="[25, 50, 100]" items-per-page="25" :headers="headers" :items="reports">
+    <v-data-table 
+        :loading="isLoading"
+        :items-per-page-options="[25, 50, 100]"
+        items-per-page="25"
+        :headers="headers"
+        :items="reports"
+    >
+        <template v-slot:loading>
+            <div class="text-h6 text-muted text-center">
+                {{ $t('Loading') }}...
+            </div>
+        </template>
         <template v-slot:item="{ item }">
             <tr>
                 <td>
@@ -20,16 +31,10 @@
 <script setup>
     import { computed } from "vue";
     import { useI18n } from 'vue-i18n';
-    import { useReportStore } from '@/stores/useReportStore';
-    import { storeToRefs } from 'pinia';
 
     const emit = defineEmits(['seeReport']);
 
-    const reportStore = useReportStore();
-    const { getReports } = reportStore;
-    const { reports } = storeToRefs(reportStore);
-
-    getReports();
+    const props = defineProps({ reports: Array, isLoading: Boolean });
 
     const { t, locale } = useI18n();
     const cap = string => string.charAt(0).toUpperCase() + string.slice(1);
@@ -39,7 +44,7 @@
         { title: t('Nb students'), key: 'students.length', align: 'center' },
         { title: t('Reported by'), key: 'by.name' },
         { title: t('Reported on'), key: 'on' },
-        { title: t('Status'), key: 'filedBy.name', align: 'center' },
+        { title: t('Status'), sortable: false, align: 'center' },
         { title: t('View'), sortable: false, align: 'center' },
     ]);
 

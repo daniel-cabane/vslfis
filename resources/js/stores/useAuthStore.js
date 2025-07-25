@@ -12,6 +12,9 @@ export const useAuthStore = defineStore('auth', {
         defineUser(u) {
             this.user = u;
         },
+        removeFromUnfinalized(id) {
+            this.user.unfinalized = this.user.unfinalized.filter(n => n != id);
+        },
         async testLogin(testUser) {
             axios.get('/sanctum/csrf-cookie').then(async response => {
             // Login...

@@ -75,8 +75,17 @@ export const useReportStore = defineStore('report', {
             const res = await get('/api/reports/myReports', true);
             this.reports = res.reports.map(r => this.fillCategory(r));
         },
+        async myUnfinalizedReports() {
+            const res = await get('/api/reports/myReports/unfinalized', true);
+            this.reports = res.reports.map(r => this.fillCategory(r));
+        },
         async getReports() {
             const res = await get('/api/reports', true);
+            this.reports = res.reports.map(r => this.fillCategory(r));
+        },
+        async getReportByStatus(status) {
+            this.reports = [];
+            const res = await get(`/api/reports/${status}`);
             this.reports = res.reports.map(r => this.fillCategory(r));
         }
     },

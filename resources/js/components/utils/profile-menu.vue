@@ -3,6 +3,7 @@
         <v-menu eager :close-on-content-click="false">
             <template v-slot:activator="{ props }">
                 <v-btn outline icon="mdi-account" v-bind="props"/>
+                <v-badge dot color="error" style="position:absolute;top:12px;right:12px;"/>
             </template>
             <v-list>
                 <v-dialog width="350" v-model="newNameDialog" v-if="user">
@@ -22,9 +23,17 @@
                         </v-card>
                     </template>
                 </v-dialog>
-                <v-divider />
+                <v-divider v-if="user && user.unfinalized.length"/>
+                <v-list-item @click="goToUnfinalized" v-if="user && user.unfinalized.length">
+                    <template v-slot:prepend>
+                        <v-badge :content="user.unfinalized.length" color="error" v-if="user.unfinalized.length">
+                            <v-icon icon="mdi-close-circle"></v-icon>
+                        </v-badge>
+                    </template>
+                    <v-list-item-title>{{ $t('Unfinalized reports') }}</v-list-item-title>
+                </v-list-item>
+                <v-divider/>
                 <theme-and-language-picker />
-                <v-divider />
                 <v-list-item @click="goToDashboard" v-if="user &&(user.is.admin || user.is.cpe)">
                     <template v-slot:prepend>
                         <v-icon icon="mdi-security"></v-icon>
@@ -95,9 +104,8 @@
     }
 
     const router = useRouter();
-    const goToDashboard = () => {
-        router.push('/admin');
-    }
+    const goToDashboard = () => router.push('/admin');
+    const goToUnfinalized = () => router.push('/unfinalized');
     const localEnv = computed(() => window.Laravel.env == 'local');
 
     const newNameDialog = ref(false);

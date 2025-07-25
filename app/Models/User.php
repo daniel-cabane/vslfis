@@ -51,7 +51,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected $appends = ['is'];
+    protected $appends = ['is', 'unfinalized'];
 
     public function getIsAttribute()
     {
@@ -59,6 +59,11 @@ class User extends Authenticatable
           'cpe' => $this->hasRole('cpe'),
           'admin' => $this->hasRole('admin')
       ];
+    }
+
+    public function getUnfinalizedAttribute()
+    {
+      return $this->reports()->where('finalized', 0)->get()->map(fn($r) => $r->id);
     }
 
     public function reports()

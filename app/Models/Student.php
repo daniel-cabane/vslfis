@@ -19,4 +19,9 @@ class Student extends Model
     {
         return $this->belongsToMany(Report::class);
     }
+
+    public function accesses()
+    {
+        return $this->hasMany(Access::class);
+    }
 }

@@ -135,6 +135,7 @@
 <script setup>
     import { ref, computed } from "vue";
     import { useReportStore } from '@/stores/useReportStore';
+    import { useAuthStore } from '@/stores/useAuthStore';
     import { storeToRefs } from 'pinia';
     import useNotifications from '@/composables/useNotifications';
 
@@ -143,6 +144,8 @@
     const reportStore = useReportStore();
     const { searchStudents, purgeStudents, removeStudent, addStudent, saveReport, updateReport, deleteReport, fileReport, unfileReport, categories } = reportStore;
     const { students, isLoading } = storeToRefs(reportStore);
+
+    const { removeFromUnfinalized } = useAuthStore();
 
     const props = defineProps({ report: Object });
     const emit = defineEmits(['close']);
@@ -197,6 +200,9 @@
                 finalized: finalized.value,
             });
             if(res){
+                if(finalized.value){
+                    removeFromUnfinalized(props.report.id);
+                }
                 closeDialog();
             }
         } else {

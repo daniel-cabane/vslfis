@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\AccessController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -65,10 +66,20 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/students/tag', [StudentController::class, 'byTag']);
     
     Route::get('/reports', [ReportController::class, 'index']);
+    Route::get('/reports/unfinalized', [ReportController::class, 'unfinalized']);
+    Route::get('/reports/filable', [ReportController::class, 'filable']);
+    Route::get('/reports/filed', [ReportController::class, 'filed']);
     Route::get('/reports/myReports', [ReportController::class, 'myReports']);
+    Route::get('/reports/myReports/unfinalized', [ReportController::class, 'myUnfinalized']);
     Route::post('/reports', [ReportController::class, 'store']);
     Route::post('/reports/{report}/file', [ReportController::class, 'file']);
     Route::post('/reports/{report}/unfile', [ReportController::class, 'unfile']);
+
+    Route::get('/access', [AccessController::class, 'dayIndex']);
+    Route::post('/access/{student}', [AccessController::class, 'store']);
+    Route::delete('/access/{access}', [AccessController::class, 'destroy']);
+
+    Route::get('/access/students/{student}', [AccessController::class, 'byStudent']);
 });
 
 Route::group(['middleware'=>['can:update,report']], function(){

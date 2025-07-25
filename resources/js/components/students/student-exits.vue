@@ -1,14 +1,17 @@
 <template>
-    <v-container>
-        <div class="mb-2">
-            <v-btn prepend-icon="mdi-chevron-left" :text="$t('Home')" rounded="pill" :to="'/'"/>
+    <div v-if="focusedStudent">
+            <involved-student-card 
+                class="my-2"
+                show-actions
+                :student="focusedStudent" 
+                @photo="showPhoto" 
+                @remove="focusedStudent=null"
+                @access="recordAccess"
+            />
         </div>
-        <div v-if="focusedStudent">
-            <involved-student-card class="my-2" :student="focusedStudent" @photo="showPhoto" @remove="focusedStudent=null"/>
-        </div>
-        <div class="d-flex align-center ga-4 my-2">
+        <div class="d-flex align-center ga-4 my-2 pr-2">
             <search-input label="Name or email" :isLoading="isLoading" @search="searchStudents"/>
-            <scan-card @scanSuccessful="getStudentFromScan" class="mt-2 mr-2"/>
+            <scan-card @scanSuccessful="getStudentFromScan"/>
         </div>
         <div class="pa-2" v-if="students.length">
             <v-list class="py-0">
@@ -28,19 +31,18 @@
             <img style="max-width:90vw;max-height:90vh;object-fit:contain;position:relative;" :src="photoUrl"/>
             <v-btn icon="mdi-close" color="error" style="position:fixed;top:10px;right:10px;" @click="photoDialog=false"/>
         </v-dialog>
-    </v-container>
 </template>
 <script setup>
-    import { ref } from "vue";
+import { ref } from "vue";
     import { useReportStore } from '@/stores/useReportStore';
+    import { useAccessStore } from '@/stores/useAccessStore';
     import { storeToRefs } from 'pinia';
-    // import useNotifications from '@/composables/useNotifications';
-
-    // const { addNotification } = useNotifications();
 
     const reportStore = useReportStore();
     const { searchStudents, purgeStudents } = reportStore;
     const { students, isLoading } = storeToRefs(reportStore);
+
+    const { recordAccess } = useAccessStore();
 
     const photoDialog = ref(false);
     const photoUrl = ref(null);

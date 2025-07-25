@@ -14,5 +14,5 @@ Route::post('/logout', [UserController::class, 'logout']);
 
 Route::get('/{name}', function(){
   return view('welcome');
-})->where(['name' => 'home|manage|admin|history|identification']);
+})->where(['name' => 'home|manage|admin|history|unfinalized|exits']);
 

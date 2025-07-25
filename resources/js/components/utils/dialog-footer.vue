@@ -1,5 +1,5 @@
 <template>
-    <v-card-actions>
+    <v-card-actions @keydown.enter="emit('yes')">
         <v-spacer/>
         <v-btn
             :variant="cancelVariant"

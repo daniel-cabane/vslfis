@@ -14,10 +14,38 @@ class ReportController extends Controller
         ]);
     }
 
+    public function unfinalized()
+    {
+        return response()->json([
+            'reports' => Report::where('finalized', 0)->get()->map(fn($r) => $r->format())
+        ]);
+    }
+
+    public function filable()
+    {
+        return response()->json([
+            'reports' => Report::where('finalized', 1)->where('filed_by', null)->get()->map(fn($r) => $r->format())
+        ]);
+    }
+
+    public function filed()
+    {
+        return response()->json([
+            'reports' => Report::where('filed_by', '!=', null)->take(100)->get()->map(fn($r) => $r->format())
+        ]);
+    }
+
     public function myReports()
     {
         return response()->json([
             'reports' => auth()->user()->reports->map(fn($r) => $r->format())
+        ]);
+    }
+
+    public function myUnfinalized()
+    {
+        return response()->json([
+            'reports' => auth()->user()->reports()->where('finalized', 0)->get()->map(fn($r) => $r->format())
         ]);
     }
 
