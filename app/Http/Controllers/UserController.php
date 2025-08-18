@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-// use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
@@ -63,4 +63,42 @@ class UserController extends Controller
 
         return response()->json(['user' => $user]);
     }
+
+    public function googleSigninRedirect()
+  {
+    return Socialite::driver('google')->redirect();
+  }
+
+  public function googleSigninCallback()
+  {
+    $google_user = Socialite::driver('google')->user();
+    $email = $google_user->getEmail();
+
+    $emailParts = explode('@', $email);
+    if($emailParts[1] != 'g.lfis.edu.hk' || is_numeric(substr($emailParts[0], -1))){
+        return response()->json([
+            'message' => [
+                'text' => 'You cannot use this application',
+                'type' => 'error'
+            ]
+            ]);
+    }
+
+    $user = User::where('email', $email)->first();
+
+    if(!$user){
+      $user = User::create([
+        'name' => $google_user->getName(),
+        'email' => $email,
+        'google_id' => $google_user->getId(),
+        'email_verified_at' => Carbon::now(),
+        'password' => Hash::make(Str::password()),
+        'preferences' => ['notifications' => 'all']
+      ]);
+    }
+
+    Auth::login($user);
+
+    return redirect()->intended('/');
+  }
 }
