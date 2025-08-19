@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -91,18 +92,18 @@ class UserController extends Controller
 
     if(!$user){
         logger('Creating user');
-      $user = User::create([
-        'name' => $google_user->getName(),
-        'email' => $email,
-        'google_id' => $google_user->getId(),
-        'email_verified_at' => Carbon::now(),
-        'password' => Hash::make(Str::password()),
-        'preferences' => ['notifications' => 'all']
-      ]);
+        $user = User::create([
+            'name' => $google_user->getName(),
+            'email' => $email,
+            'google_id' => $google_user->getId(),
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make(Str::password()),
+            'preferences' => ['notifications' => 'all']
+        ]);
     }
 
     Auth::login($user);
-    logger('User created');
+    logger('User logged in');
 
     return redirect()->intended('/');
   }
