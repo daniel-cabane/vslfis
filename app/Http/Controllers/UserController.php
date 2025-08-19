@@ -73,9 +73,11 @@ class UserController extends Controller
   {
     $google_user = Socialite::driver('google')->user();
     $email = $google_user->getEmail();
+    logger("=================== $email ===================");
 
     $emailParts = explode('@', $email);
     if($emailParts[1] != 'g.lfis.edu.hk' || is_numeric(substr($emailParts[0], -1))){
+        logger('Rejected');
         return response()->json([
             'message' => [
                 'text' => 'You cannot use this application',
@@ -87,6 +89,7 @@ class UserController extends Controller
     $user = User::where('email', $email)->first();
 
     if(!$user){
+        logger('Creating user');
       $user = User::create([
         'name' => $google_user->getName(),
         'email' => $email,
@@ -98,6 +101,7 @@ class UserController extends Controller
     }
 
     Auth::login($user);
+    logger('User created');
 
     return redirect()->intended('/');
   }

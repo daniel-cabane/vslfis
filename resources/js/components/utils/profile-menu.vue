@@ -3,7 +3,7 @@
         <v-menu eager :close-on-content-click="false">
             <template v-slot:activator="{ props }">
                 <v-btn outline icon="mdi-account" v-bind="props"/>
-                <v-badge dot color="error" style="position:absolute;top:12px;right:12px;"/>
+                <v-badge dot color="error" style="position:absolute;top:12px;right:12px;" v-if="user && user.unfinalized.length"/>
             </template>
             <v-list>
                 <v-dialog width="350" v-model="newNameDialog" v-if="user">
