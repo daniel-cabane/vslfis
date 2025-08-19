@@ -71,6 +71,7 @@ class UserController extends Controller
 
   public function googleSigninCallback()
   {
+    logger('In callback');
     $google_user = Socialite::driver('google')->user();
     $email = $google_user->getEmail();
     logger("=================== $email ===================");
