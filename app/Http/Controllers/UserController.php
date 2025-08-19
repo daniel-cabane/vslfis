@@ -103,6 +103,6 @@ class UserController extends Controller
     Auth::login($user);
     logger('User created');
 
-    return redirect()->intended('/auth/google/callback');
+    return redirect()->intended('/');
   }
 }
