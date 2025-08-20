@@ -9,6 +9,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/not', function () {
+    return view('notwelcome');
+});
+
 Route::post('/testLogin', [UserController::class, 'testLogin']);
 
 Route::post('/logout', [UserController::class, 'logout']);

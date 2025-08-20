@@ -26,7 +26,7 @@
                 </v-toolbar>
             </template>
             <template v-slot:item.student="{ value }">
-                <v-chip :text="value.split('-||-')[0]" :color="value.split('-||-')[1]"/>
+                <v-chip variant="flat" :text="value.split('-||-')[0]" :color="value.split('-||-')[1]"/>
             </template>
             <template v-slot:item.direction="{ value }">
                 <v-icon icon="mdi-login" style="transform: rotateY(180deg);" color="success" v-if="value=='in'"/>

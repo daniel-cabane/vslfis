@@ -39,7 +39,8 @@
 
     const emit = defineEmits(['scanSuccessful']);
 
-    const disable = ('NDEFReader' in window); // ! this in prod
+    const disable = !('NDEFReader' in window);
+    const ndef = ref(null);
 
     const dialog = ref(false);
     const scanning = ref(false);
@@ -47,16 +48,41 @@
     const scan = async () => {
         dialog.value = true;
         scanning.value = true;
-        setTimeout(async () => { // replace this with ndef logic
-            scanning.value = false;
-            const student = await findByTag(405204025);
-            if(student){
+        //////////////////////////////////////////////////
+        // setTimeout(async () => { // replace this with ndef logic
+        //     scanning.value = false;
+        //     const student = await findByTag(405204025);
+        //     if(student){
+        //         dialog.value = false;
+        //         emit('scanSuccessful', student);
+        //     }
+        // }, 2000);
+        //////////////////////////////////////////////
+        try {
+            ndef.value = new NDEFReader();
+            await ndef.value.scan();
+
+            ndef.value.addEventListener("readingerror", () => {
+                addNotification("Unreadable tag");
+            });
+
+            ndef.value.addEventListener("reading", async ({ serialNumber }) => {
+                const tagId = parseInt(serialNumber.split(":").reverse().join(""), 16);
+                const student = await findByTag(tagId);
+                if(student){
+                    emit('scanSuccessful', student);
+                }
                 dialog.value = false;
-                emit('scanSuccessful', student);
-            }
-        }, 2000);
+            });
+        } catch (err) {
+            addNotification(err);
+            console.log(err);
+        }
+        ndef.value = null;
+        /////////////////////////////////////////////
     }
     const cancelScan = () => {
+        ndef.value = null;
         dialog.value = false;
         scanning.value = false;
     }

@@ -74,26 +74,21 @@ class UserController extends Controller
 
   public function googleSigninCallback()
   {
-    logger('In callback');
     $google_user = Socialite::driver('google')->user();
     $email = $google_user->getEmail();
-    logger("=================== $email ===================");
-
+    
     $emailParts = explode('@', $email);
     if($emailParts[1] != 'g.lfis.edu.hk' || is_numeric(substr($emailParts[0], -1))){
+        logger("=================== $email ===================");
         logger('Rejected');
-        return response()->json([
-            'message' => [
-                'text' => 'You cannot use this application',
-                'type' => 'error'
-            ]
-            ]);
+        return redirect()->intended('/not');
     }
 
     $user = User::where('email', $email)->first();
 
     if(!$user){
-        logger('Creating user');
+        logger("=================== $email ===================");
+        logger('Created');
         $user = User::create([
             'name' => $google_user->getName(),
             'email' => $email,
@@ -105,7 +100,6 @@ class UserController extends Controller
     }
 
     Auth::login($user);
-    logger('User logged in');
 
     return redirect()->intended('/');
   }
