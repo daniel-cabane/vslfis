@@ -12,27 +12,24 @@
                         <v-select variant="outlined" :label="$t('Status')" v-model="newStudent.status" :items="statusOptions"/>
                     </div>
                     <v-window v-model="AddStudentWindow">
-                        <v-window-item value="0">
+                        <v-window-item value="default">
                             <div class="d-flex ga-2 align-center">
-                                <v-btn style="flex:1" variant="outlined" color="primary" density="compact" append-icon="mdi-account-plus" :disabled="nullStatus" :text="$t('Add one')" @click="AddStudentWindow = 1"/>
+                                <v-btn style="flex:1" variant="outlined" color="primary" density="compact" append-icon="mdi-account-plus" :disabled="nullStatus" :text="$t('Add one')" @click="AddStudentWindow = 'addOne'"/>
                                 <v-btn style="flex:1" variant="outlined" color="primary" density="compact" append-icon="mdi-clipboard" :disabled="nullStatus" :text="$t('Paste multiple')" @click="pasteStudents"/>
                                 <v-icon size="x-large" icon="mdi-help-circle-outline" @click="showHelp=!showHelp"/>
                             </div>
                         </v-window-item>
-                        <v-window-item value="1">
+                        <v-window-item value="addOne">
                             <div class="d-flex ga-2 py-3">
                                 <std-text-input v-model="newStudent.lastName" label="Last Name"/>
                                 <std-text-input v-model="newStudent.firstName" label="First Name"/>
-                                <!-- <v-text-field variant="outlined" :label="$t('Last Name')" v-model="newStudent.lastName"/>
-                                <v-text-field variant="outlined" :label="$t('First Name')" v-model="newStudent.firstName"/> -->
                             </div>
                             <div class="d-flex ga-2">
                                 <std-text-input v-model="newStudent.email" label="Email"/>
-                                <!-- <v-text-field variant="outlined" :label="$t('Email')" v-model="newStudent.email"/> -->
-                                <v-number-input control-variant="hidden" variant="outlined" :label="$t('Tag number')" v-model="newStudent.tagNb"/>
+                                <v-number-input hide-details control-variant="hidden" variant="outlined" :label="$t('Tag number')" v-model="newStudent.tagNb"/>
                             </div>
-                            <div class="d-flex justify-end">
-                                <v-btn variant="tonal" color="error" density="compact" class="mr-2" :text="$t('Cancel')" @click="AddStudentWindow = 0"/>
+                            <div class="d-flex justify-end mt-4">
+                                <v-btn variant="tonal" color="error" density="compact" class="mr-2" :text="$t('Cancel')" @click="AddStudentWindow = 'default'"/>
                                 <v-btn variant="outlined" color="primary" density="compact" :text="$t('Add')" @click="addSingleStudent"/>
                             </div>
                         </v-window-item>
@@ -115,7 +112,7 @@
     const emit = defineEmits(['saveStudents']);
     const props = defineProps({ isLoading: Boolean });
 
-    const AddStudentWindow = ref(0);
+    const AddStudentWindow = ref('default');
     const addStudentDialog = ref(false);
     const newStudent = ref({});
     const newStudents = ref([]);
@@ -149,7 +146,7 @@
         { title: t('Remove'), sortable: false, align: 'center' }
     ];
     const cancelAddStudents = () => {
-        AddStudentWindow.value = 0;
+        AddStudentWindow.value = 'default';
         newStudent.value = {};
         newStudents.value = [];
         showHelp.value = false;
