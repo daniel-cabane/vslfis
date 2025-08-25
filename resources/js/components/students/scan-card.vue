@@ -39,7 +39,7 @@
 
     const emit = defineEmits(['scanSuccessful']);
 
-    const disable = !('NDEFReader' in window);
+    const disable = ('NDEFReader' in window);
     const ndef = ref(null);
 
     const dialog = ref(false);
@@ -48,16 +48,6 @@
     const scan = async () => {
         dialog.value = true;
         scanning.value = true;
-        //////////////////////////////////////////////////
-        // setTimeout(async () => { // replace this with ndef logic
-        //     scanning.value = false;
-        //     const student = await findByTag(405204025);
-        //     if(student){
-        //         dialog.value = false;
-        //         emit('scanSuccessful', student);
-        //     }
-        // }, 2000);
-        //////////////////////////////////////////////
         try {
             ndef.value = new NDEFReader();
             await ndef.value.scan();
@@ -66,22 +56,28 @@
                 addNotification("Unreadable tag");
             });
 
-            ndef.value.addEventListener("reading", async ({ serialNumber }) => {
-                const tagId = parseInt(serialNumber.split(":").reverse().join(""), 16);
-                const student = await findByTag(tagId);
-                if(student){
-                    emit('scanSuccessful', student);
-                }
-                dialog.value = false;
-            });
+            ndef.value.addEventListener("reading", fetchStudentFromScan);
         } catch (err) {
-            addNotification(err);
+            addNotification({text: 'Reader is not available', type: 'error'});
             console.log(err);
+            ndef.value = null;
+            dialog.value = false;
+            scanning.value = false;
         }
         ndef.value = null;
-        /////////////////////////////////////////////
+    }
+    const fetchStudentFromScan = async data => {
+        const tagId = parseInt(data.serialNumber.split(":").reverse().join(""), 16);
+        const student = await findByTag(tagId);
+        if(student){
+            emit('scanSuccessful', student);
+        }
+        dialog.value = false;
+        ndef.value.removeEventListener("reading", fetchStudentFromScan);
+        ndef.value = null;
     }
     const cancelScan = () => {
+        ndef.value.removeEventListener("reading", fetchStudentFromScan);
         ndef.value = null;
         dialog.value = false;
         scanning.value = false;

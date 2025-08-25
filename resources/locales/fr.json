@@ -131,5 +131,6 @@
     "Exit deleted": "Sortie supprimée",
     "Entry deleted": "Entrée supprimée",
     "Yes, delete this entry": "Oui, supprimer cette entrée",
-    "Yes, delete this exit": "Oui, supprimer cette sortie"
+    "Yes, delete this exit": "Oui, supprimer cette sortie",
+    "Reader is not available": "Lecteur non disponible"
 }

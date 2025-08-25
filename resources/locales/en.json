@@ -130,5 +130,6 @@
     "Exit deleted": "Exit deleted",
     "Entry deleted": "Entry deleted",
     "Yes, delete this entry": "Yes, delete this entry",
-    "Yes, delete this exit": "Yes, delete this exit"
+    "Yes, delete this exit": "Yes, delete this exit",
+    "Reader is not available": "Reader is not available"
 }
