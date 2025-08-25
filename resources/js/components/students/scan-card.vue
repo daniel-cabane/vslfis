@@ -39,7 +39,7 @@
 
     const emit = defineEmits(['scanSuccessful']);
 
-    const disable = ('NDEFReader' in window);
+    const disable = !('NDEFReader' in window);
     const ndef = ref(null);
 
     const dialog = ref(false);
