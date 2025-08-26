@@ -52,11 +52,9 @@
             ndef.value = new NDEFReader();
             await ndef.value.scan();
 
-            ndef.value.addEventListener("readingerror", () => {
-                addNotification("Unreadable tag");
-            });
+            ndef.value.addEventListener("readingerror", unreadableTag, { once: true });
 
-            ndef.value.addEventListener("reading", fetchStudentFromScan);
+            ndef.value.addEventListener("reading", fetchStudentFromScan, { once: true });
         } catch (err) {
             addNotification({text: 'Reader is not available', type: 'error'});
             console.log(err);
@@ -73,11 +71,16 @@
             emit('scanSuccessful', student);
         }
         dialog.value = false;
-        ndef.value.removeEventListener("reading", fetchStudentFromScan);
+        // ndef.value.removeEventListener("reading", fetchStudentFromScan);
+        // ndef.value.removeEventListener("readingerror", unreadableTag);
         ndef.value = null;
     }
+    const unreadableTag = () => {
+        addNotification("Unreadable tag");
+    }
     const cancelScan = () => {
-        ndef.value.removeEventListener("reading", fetchStudentFromScan);
+        // ndef.value.removeEventListener("reading", fetchStudentFromScan);
+        // ndef.value.removeEventListener("readingerror", unreadableTag);
         ndef.value = null;
         dialog.value = false;
         scanning.value = false;
