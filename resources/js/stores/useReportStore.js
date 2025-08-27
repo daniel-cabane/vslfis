@@ -10,10 +10,12 @@ export const useReportStore = defineStore('report', {
         reports: [],
         report: {},
         categories: [
-            { title: 'phone', description: 'Using phone outside of designated areas', icon: 'mdi-cellphone', color: 'blue'},
+            { title: 'phone', description: 'Using a phone or connected object outside of designated areas', icon: 'mdi-cellphone', color: 'blue'},
             { title: 'computer', description: 'Using computer outside of designated areas', icon: 'mdi-laptop', color: 'purple'},
-            { title: 'behaviour', description: 'Problematic behaviour', icon: 'mdi-human-handsup', color: 'red'},
-            { title: 'badge defect', description: 'Badge missing or not apparent', icon: 'mdi-badge-account-horizontal-outline', color: 'green'},
+            { title: 'behaviour', description: 'Problematic or dangerous behaviour in the school', icon: 'mdi-human-handsup', color: '#c47500ff'},
+            { title: 'disrespect', description: 'Showing a lack of respect for a student or a member of the staff', icon: 'mdi-emoticon-angry-outline', color: 'red'},
+            { title: 'dress', description: 'Inappropriate attire in the school', icon: 'mdi-hanger', color: 'grey'},
+            { title: 'badge defect', description: 'Badge missing or not apparent', icon: 'mdi-badge-account-horizontal-outline', color: 'green'}
         ]
     }),
     actions: {
