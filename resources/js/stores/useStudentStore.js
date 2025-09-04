@@ -11,7 +11,8 @@ export const useStudentStore = defineStore('student', {
         isReady: false,
         ressourceStatus: 'Badgeless students',
         students: [],
-        student: {}
+        student: {},
+        history: JSON.parse(localStorage.getItem('studentHistory') || '[]')
     }),
     actions: {
         async getBadgelessStudents() {
@@ -71,9 +72,27 @@ export const useStudentStore = defineStore('student', {
         async findByTag(nb) {
             const res = await get(`/api/students/tag?query=Laravel&tag=${nb}`);
             if(res.student){
+                addToHistory(res.student);
+                this.student = res.student;
                 return res.student;
             }
             return false;
+        },
+        addToHistory(student) {
+            this.history = this.history.filter(s => s.id != student.id);
+            this.history.unshift(student);
+            if (this.history.length > 15) {
+                this.history.pop();
+            }
+            localStorage.setItem('studentHistory', JSON.stringify(this.history));
+        },
+        removeFromHistory(){
+            this.history = this.history.filter(s => !s.isSelected);
+            localStorage.setItem('studentHistory', JSON.stringify(this.history));
+        },
+        clearHistory() {
+            this.history = [];
+            localStorage.removeItem('studentHistory');
         }
     },
     getters: {

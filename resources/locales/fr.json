@@ -136,5 +136,10 @@
     "Entry deleted": "Entrée supprimée",
     "Yes, delete this entry": "Oui, supprimer cette entrée",
     "Yes, delete this exit": "Oui, supprimer cette sortie",
-    "Reader is not available": "Lecteur non disponible"
+    "Reader is not available": "Lecteur non disponible",
+    "Bug report": "Signaler un bug",
+    "Cyan": "Cyan",
+    "cyan": "cyan",
+    "Student history": "Historique des élèves",
+    "Empty History": "Historique vide"
 }

@@ -11,7 +11,7 @@ export const useReportStore = defineStore('report', {
         report: {},
         categories: [
             { title: 'phone', description: 'Using a phone or connected object outside of designated areas', icon: 'mdi-cellphone', color: 'blue'},
-            { title: 'computer', description: 'Using computer outside of designated areas', icon: 'mdi-laptop', color: 'purple'},
+            { title: 'computer', description: 'Using a computer improperly or outside of designated areas', icon: 'mdi-laptop', color: 'purple'},
             { title: 'behaviour', description: 'Problematic or dangerous behaviour in the school', icon: 'mdi-human-handsup', color: '#c47500ff'},
             { title: 'disrespect', description: 'Showing a lack of respect for a student or a member of the staff', icon: 'mdi-emoticon-angry-outline', color: 'red'},
             { title: 'dress', description: 'Inappropriate attire in the school', icon: 'mdi-hanger', color: 'grey'},

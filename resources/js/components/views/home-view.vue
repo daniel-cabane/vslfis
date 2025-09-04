@@ -7,21 +7,17 @@
         <v-tabs-window v-model="tab">
             <v-tabs-window-item value="reports">
                 <init-report-buttons @report="initReport"/>
-                <div class="d-flex justify-end mt-4">
+                <div class="d-flex ga-4 mt-4 flex-column flex-sm-row" style="max-width:500px;margin:auto;height:88px;">
+                    <student-history-dialog/>
                     <v-btn
                         color="primary" 
                         rounded="pill" 
                         prepend-icon="mdi-file-document-outline" 
                         :text="$t('My reports')" 
                         :to="'/history'"
+                        style="flex:1"
                     />
                 </div>
-                <!-- <div class="text-h6 text-muted mt-8">
-                    {{ $t('Students') }}
-                </div>
-                <v-btn block color="secondary" :text="`Identification / ${$t('Exit')}`" :to="'/identification'"/>
-                <div class="d-flex justify-end mt-4">
-                </div> -->
             </v-tabs-window-item>
             <v-tabs-window-item value="exits">
                 <student-exits/>
@@ -43,7 +39,11 @@
     </v-container>
 </template>
 <script setup>
-    import { ref } from "vue";
+    import { ref, computed } from "vue";
+    import { useDisplay } from 'vuetify';
+
+    const { name } = useDisplay();
+    const isWindowXs = computed(() => name.value == 'xs');
 
     const tab = ref('reports');
     const dialog = ref(false);

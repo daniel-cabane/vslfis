@@ -135,5 +135,10 @@
     "Entry deleted": "Entry deleted",
     "Yes, delete this entry": "Yes, delete this entry",
     "Yes, delete this exit": "Yes, delete this exit",
-    "Reader is not available": "Reader is not available"
+    "Reader is not available": "Reader is not available",
+    "Bug report": "Bug report",
+    "Cyan": "Cyan",
+    "cyan": "cyan",
+    "Student history": "Student history",
+    "Empty History": "Empty History"
 }

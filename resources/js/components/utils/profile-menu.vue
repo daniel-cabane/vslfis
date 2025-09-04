@@ -34,12 +34,14 @@
                 </v-list-item>
                 <v-divider/>
                 <theme-and-language-picker />
+                <v-divider/>
                 <v-list-item @click="goToDashboard" v-if="user &&(user.is.admin || user.is.cpe)">
                     <template v-slot:prepend>
                         <v-icon icon="mdi-security"></v-icon>
                     </template>
                     <v-list-item-title>Admin</v-list-item-title>
                 </v-list-item>
+                <bug-report-dialog/>
                 <v-list-item @click="logout" v-if="user">
                     <template v-slot:prepend>
                         <v-icon icon="mdi-logout"></v-icon>

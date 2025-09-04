@@ -58,7 +58,7 @@
 
     const levels = ['6e', '5e', '4e', '3e', '2nde', '1re', 'Term', 'Y7', 'Y8', 'Y9', 'Y10', 'Y11', 'Y12'];
     const statusOptions = [
-        { title: t('Blue'), value: 'blue' }, { title: t('Red'), value: 'red' }, { title: t('Black'), value: 'black'}
+        { title: t('Cyan'), value: 'cyan' }, { title: t('Blue'), value: 'blue' }, { title: t('Red'), value: 'red' }, {title: t('Black'), value: 'black'}
     ];
     const focusedStudent = ref(null);
     const editStudentDialog = ref(false);
