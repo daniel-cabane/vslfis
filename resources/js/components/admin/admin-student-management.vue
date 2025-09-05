@@ -6,6 +6,19 @@
             <admin-add-student-dialog :isLoading="isLoading"/>
         </div>
         <div class="px-4">
+            <div class="text-h5 text-muted mb-3" v-if="reports.length">
+                {{ $t('Bug reports') }}
+            </div>
+            <div v-if="reports.length">
+                <admin-bug-report-card 
+                    class="my-2" 
+                    v-for="report in reports" 
+                    :report="report" 
+                    @search="searchStudents"
+                    @close="closeReport"
+                    @delete="deleteReport"
+                />
+            </div>
             <div class="text-h5 text-muted mb-3">
                 {{ $t(ressourceStatus) }}
             </div>
@@ -18,6 +31,9 @@
                     @image="uploadPhoto"
                     :key="student.id"
                 />
+            </div>
+            <div v-if="students.length == 0" class="text-h4 text-muted text-center pt-12">
+                {{ $t('Nothing to see here') }}...
             </div>
         </div>
         <v-dialog max-width="650" v-model="editStudentDialog">
@@ -45,6 +61,7 @@
 <script setup>
     import { ref } from "vue";
     import { useStudentStore } from '@/stores/useStudentStore';
+    import { useBugreportStore } from '@/stores/useBugreportStore';
     import { storeToRefs } from 'pinia';
     import { useI18n } from 'vue-i18n';
 
@@ -53,8 +70,12 @@
     const studentStore = useStudentStore();
     const { getBadgelessStudents, searchStudents, updateStudent, deleteStudent, uploadPhoto } = studentStore;
     const { students, ressourceStatus, isLoading } = storeToRefs(studentStore);
-
     getBadgelessStudents();
+
+    const bugReportStore = useBugreportStore();
+    const { getReports, closeReport, deleteReport } = bugReportStore;
+    const { reports } = storeToRefs(bugReportStore);
+    getReports();
 
     const levels = ['6e', '5e', '4e', '3e', '2nde', '1re', 'Term', 'Y7', 'Y8', 'Y9', 'Y10', 'Y11', 'Y12'];
     const statusOptions = [

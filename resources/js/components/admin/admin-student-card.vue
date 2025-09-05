@@ -55,7 +55,9 @@
         </div>
         <v-card-actions class="pt-0">
             <div style="width:100px;" class="d-flex justify-center">
-                <v-chip variant="flat" :color="student.status" :text="$t(student.status)"/>
+                <v-chip variant="flat" :color="student.status">
+                    <span style="color:white">{{ $t(student.status) }}</span>
+                </v-chip>
             </div>
             <v-spacer/>
             <div v-if="window==0">

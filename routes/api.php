@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\BugreportController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -25,6 +26,9 @@ Route::group(['middleware'=>['role:admin']], function(){
 
     Route::patch('/admin/users/{user}/update', [AdminController::class, 'updateUser']);
     Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser']);
+
+    Route::patch('/admin/bugreport/{bugreport}', [BugreportController::class, 'update']);
+    Route::delete('/admin/bugreport/{bugreport}', [BugreportController::class, 'destroy']);
 });
 
 
@@ -42,17 +46,21 @@ Route::group(['middleware'=>['role:admin|cpe']], function(){
     Route::delete('/admin/students/{student}', [AdminController::class, 'deleteStudent']);
     Route::get('/admin/students/badgeless', [AdminController::class, 'badgelessStudents']);
     Route::get('/admin/students/search', [AdminController::class, 'searchStudents']);
+
+    Route::get('/admin/bugreports', [BugreportController::class, 'index']);
 });
 
 
 /*
 *
-*   USER
+*   USER & BUG REPORT
 * 
 */
 
 Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::patch('/user/name', [UserController::class, 'updateName']);
+
+    Route::post('/bugreport', [BugreportController::class, 'store']);
 });
 
 /*

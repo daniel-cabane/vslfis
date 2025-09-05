@@ -132,6 +132,7 @@ class AdminController extends Controller
                 $query->where('firstName', 'LIKE', "%{$name}%")
                       ->orWhere('email', 'like', "%$name%")
                       ->orWhere('lastName', 'LIKE', "%{$name}%")
+                      ->orWhere(DB::raw("CONCAT(lastName, ' ', firstName)"), 'LIKE', "%{$name}%")
                       ->orWhere(DB::raw("CONCAT(firstName, ' ', lastName)"), 'LIKE', "%{$name}%");
             });
         })->get();

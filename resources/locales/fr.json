@@ -138,8 +138,13 @@
     "Yes, delete this exit": "Oui, supprimer cette sortie",
     "Reader is not available": "Lecteur non disponible",
     "Bug report": "Signaler un bug",
+    "Bug reports": "Signalements de bug",
     "Cyan": "Cyan",
     "cyan": "cyan",
     "Student history": "Historique des élèves",
-    "Empty History": "Historique vide"
+    "Empty History": "Historique vide",
+    "The comment field is required": "Merci de saisir un commentaire",
+    "Report from": "Signalement de",
+    "Report closed": "Signalement fermé",
+    "Nothing to see here": "Un grand vide"
 }

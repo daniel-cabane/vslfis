@@ -137,8 +137,13 @@
     "Yes, delete this exit": "Yes, delete this exit",
     "Reader is not available": "Reader is not available",
     "Bug report": "Bug report",
+    "Bug reports": "Bug reports",
     "Cyan": "Cyan",
     "cyan": "cyan",
     "Student history": "Student history",
-    "Empty History": "Empty History"
+    "Empty History": "Empty History",
+    "The comment field is required": "The comment field is required",
+    "Report from": "Report from",
+    "Report closed": "Report closed",
+    "Nothing to see here": "Nothing to see here"
 }

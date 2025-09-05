@@ -51,7 +51,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected $appends = ['is', 'unfinalized'];
+    protected $appends = ['is', 'unfinalized', 'bugreport'];
 
     public function getIsAttribute()
     {
@@ -69,5 +69,13 @@ class User extends Authenticatable
     public function reports()
     {
         return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    public function getBugreportAttribute()
+    {
+        if($this->hasRole('admin')){
+            return BugReport::where('status', 'open')->get();
+        }
+        return [];
     }
 }

@@ -3,7 +3,7 @@
         <v-menu eager :close-on-content-click="false">
             <template v-slot:activator="{ props }">
                 <v-btn outline icon="mdi-account" v-bind="props"/>
-                <v-badge dot color="error" style="position:absolute;top:12px;right:12px;" v-if="user && user.unfinalized.length"/>
+                <v-badge dot color="error" style="position:absolute;top:12px;right:12px;" v-if="user && (user.unfinalized.length || user.bugreport.length)"/>
             </template>
             <v-list>
                 <v-dialog width="350" v-model="newNameDialog" v-if="user">
@@ -37,7 +37,10 @@
                 <v-divider/>
                 <v-list-item @click="goToDashboard" v-if="user &&(user.is.admin || user.is.cpe)">
                     <template v-slot:prepend>
-                        <v-icon icon="mdi-security"></v-icon>
+                        <v-badge :content="user.bugreport.length" color="error" v-if="user.bugreport.length">
+                            <v-icon icon="mdi-security"/>
+                        </v-badge>
+                        <v-icon icon="mdi-security" v-else/>
                     </template>
                     <v-list-item-title>Admin</v-list-item-title>
                 </v-list-item>
